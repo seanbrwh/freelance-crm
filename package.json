@@ -1,0 +1,9 @@
+{
+  "name": "freelancecrm",
+  "description": "crm for freelancers",
+  "author": "Sean White (seanbrwh@gmail.com)",
+  "license": "MIT",
+  "scripts": {
+    "start": ""
+  }
+}
