@@ -106,3 +106,6 @@ static
 
 # vs Code extensions
 .vscode
+
+# Lock files npm && yarn
+*.lock
