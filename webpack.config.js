@@ -8,7 +8,8 @@ module.exports = env => ({
   entry: { "freelance-crm": "./src/App/index.tsx" },
   output: {
     path: __dirname + "/dist/static",
-    filename: process.env.LOCAL === "true" ? "[name].js" : "[name].[hash].js",
+    filename:
+      process.env.NODE_ENV === "development" ? "[name].js" : "[name].[hash].js",
     publicPath: process.env.PUBLIC_PATH || "/dist/static/"
   },
   module: {
