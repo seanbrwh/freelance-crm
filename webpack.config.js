@@ -1,19 +1,20 @@
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const ManifestPlugin = require("webpack-manifest-plugin");
 
 module.exports = env => ({
   entry: { "freelance-crm": "./src/App/index.tsx" },
   output: {
     path: __dirname + "/dist/static",
-    fileName: process.env.LOCAL === "true" ? "[name].js" : "[name].[hash].js",
+    filename: process.env.LOCAL === "true" ? "[name].js" : "[name].[hash].js",
     publicPath: process.env.PUBLIC_PATH || "/dist/static/"
   },
   module: {
     rules: [
       {
-        test: /\.()$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: "babel-loader"
       },
@@ -41,7 +42,9 @@ module.exports = env => ({
   plugins: [
     new CleanWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
-    new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: env && env.analyze ? "server" : "disabled"
+    }),
     new ManifestPlugin()
   ],
   optimization: {
