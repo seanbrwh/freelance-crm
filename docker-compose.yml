@@ -1,0 +1,17 @@
+version: "3"
+services:
+  web-dev:
+    container_name: web-dev
+    build:
+      context: .
+      dockerfile: ./Dockerfile-dev
+    command: "yarn dev"
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+    ports:
+      - "3015:3015"
+      - "3020:3020"
+    environment:
+      - NODE_ENV=$NODE_ENV
+      - CHOKIDAR_USEPOLLING=true

@@ -34,14 +34,14 @@ module.exports = env => ({
     historyApiFallback: true,
     index: "index.html",
     port: 3015,
-    host: env.DOCKER ? "localhost" : "0.0.0.0"
+    host: "0.0.0.0"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({ tsconfig: "./tsconfig.app.json" }),
     new BundleAnalyzerPlugin({
       analyzerMode: env && env.analyze ? "server" : "disabled"
     }),
