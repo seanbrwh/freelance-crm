@@ -8,9 +8,8 @@ module.exports = env => ({
   entry: { "freelance-crm": "./src/App/index.tsx" },
   output: {
     path: __dirname + "/dist/static",
-    filename:
-      process.env.NODE_ENV === "development" ? "[name].js" : "[name].[hash].js",
-    publicPath: process.env.PUBLIC_PATH || "/dist/static/"
+    filename: env.LOCAL ? "[name].js" : "[name].[hash].js",
+    publicPath: env.PUBLIC_PATH || "/dist/static/"
   },
   module: {
     rules: [
@@ -20,7 +19,7 @@ module.exports = env => ({
         use: "babel-loader"
       },
       {
-        test: /\.()$/,
+        test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
             loader: "file-loader",
@@ -35,7 +34,7 @@ module.exports = env => ({
     historyApiFallback: true,
     index: "index.html",
     port: 3015,
-    host: "0.0.0.0"
+    host: env.DOCKER ? "localhost" : "0.0.0.0"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"]
@@ -47,8 +46,5 @@ module.exports = env => ({
       analyzerMode: env && env.analyze ? "server" : "disabled"
     }),
     new ManifestPlugin()
-  ],
-  optimization: {
-    namedChunks: true
-  }
+  ]
 });
