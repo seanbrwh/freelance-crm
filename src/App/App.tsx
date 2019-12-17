@@ -1,5 +1,6 @@
 import React from "react";
+import Routes from "./Routes";
 
 export default function App() {
-  return <div>App 2</div>;
+  return <div>{Routes} </div>;
 }
