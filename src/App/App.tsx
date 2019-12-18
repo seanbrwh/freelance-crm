@@ -6,15 +6,23 @@ import Footer from "./Components/Footer";
 
 const Main = styled.main`
   width: 100%;
-  background: grey;
+  height: calc(100vh -3rem);
+  margin-top: 3rem;
+`;
+const AppContainer = styled.div`
+  width: 70%;
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export default function App() {
   return (
     <Main>
-      <Navbar />
-      {Routes}
-      <Footer />
+      <AppContainer>
+        <Navbar />
+        {Routes}
+        <Footer />
+      </AppContainer>
     </Main>
   );
 }
