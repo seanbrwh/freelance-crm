@@ -19,7 +19,7 @@ export default [
     ]
   },
   {
-    path: "api/user",
+    path: "/api/user",
     method: "post",
     handler: [
       async (req: Request, res: Response) => {

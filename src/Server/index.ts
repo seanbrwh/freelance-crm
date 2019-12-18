@@ -10,7 +10,7 @@ const { PORT } = process.env;
 
 const router = express();
 
-const db = "mongodb://localhost:27017";
+const db = "mongodb://mongo:27017";
 
 connect({ db });
 applyMiddleware(middleware, router);
