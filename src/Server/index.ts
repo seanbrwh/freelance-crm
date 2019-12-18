@@ -4,11 +4,15 @@ import express from "express";
 import { applyMiddleware, applyRoutes } from "./utils";
 import routes from "./routes";
 import middleware from "./middleware";
+import connect from "./connect";
 
 const { PORT } = process.env;
 
 const router = express();
 
+const db = "mongodb://localhost:27017";
+
+connect({ db });
 applyMiddleware(middleware, router);
 applyRoutes(routes, router);
 
