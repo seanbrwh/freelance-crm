@@ -11,7 +11,7 @@ const { LOCAL } = process.env;
 
 const authConfig = {
   domain: "dev-ib51uhnr.auth0.com",
-  audience: "freelance-crm"
+  audience: "freelance/crm/api"
 };
 
 export const checkJWT = jwt({
@@ -56,6 +56,7 @@ export const serveIndex = (router: Router) => {
     if (req.headers.authorization) {
       return next();
     } else {
+      res.setHeader("Cache-Control", "no-store");
       res.render("index", {
         jsMainFile: LOCAL
           ? "http://localhost:3015/freelance-crm.js"
