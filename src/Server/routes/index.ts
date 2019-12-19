@@ -10,7 +10,7 @@ export default [
     handler: [
       checkJWT,
       (req: Request, res: Response) => {
-        res.send({ msg: "you have authenticated" });
+        res.status(200).send({ msg: "you have authenticated" });
       }
     ]
   }

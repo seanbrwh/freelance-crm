@@ -52,26 +52,15 @@ export const setStaticPath = (router: Router) => {
   );
 };
 export const serveIndex = (router: Router) => {
-  router.use(
-    "*",
-    (req, res, next) => {
-      if (req.headers.authorization && checkJWT) {
-        return next();
-      } else if (req.url.includes("/api") && !checkJWT) {
-        res
-          .status(401)
-          .send({ error: "You must be authenticated to access this api" });
-      } else {
-        res.send({ error: "need" });
-      }
-    },
-    (req, res) => {
-      res.setHeader("cache-control", "no-store");
+  router.use("*", (req, res, next) => {
+    if (req.headers.authorization) {
+      return next();
+    } else {
       res.render("index", {
         jsMainFile: LOCAL
           ? "http://localhost:3015/freelance-crm.js"
           : require("./dist/static/manifest.json")["freelance-crm.js"]
       });
     }
-  );
+  });
 };

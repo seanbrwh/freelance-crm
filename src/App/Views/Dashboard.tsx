@@ -20,6 +20,7 @@ export default function Dashboard() {
       });
 
       const responseData = await response.json();
+      console.log(JSON.stringify(responseData));
       setShowResult(true);
       setApiMessage(responseData);
     } catch (error) {
