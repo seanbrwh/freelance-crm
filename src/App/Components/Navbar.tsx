@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useAuth0 } from "../react-auth0-spa";
+import { Link } from "react-router-dom";
 
 const Header = styled.header`
   width: inherit;
@@ -22,6 +24,7 @@ const Ul = styled.ul`
 const Button = styled.button``;
 
 export default function Navbar() {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   return (
     <Header>
       <Nav>
@@ -33,8 +36,21 @@ export default function Navbar() {
           <li>Resources</li>
         </Ul>
         <section>
-          <button>Sign In </button>
-          <button>Start free</button>
+          {!isAuthenticated && (
+            <>
+              <button onClick={() => loginWithRedirect({})}>Sign In </button>
+              <button>Start free</button>
+            </>
+          )}
+          {isAuthenticated && (
+            <>
+              <button onClick={() => logout()}>Sign Out</button>
+              <span>
+                <Link to="/">Home</Link>
+                <Link to="/dashboard">Dashboard</Link>
+              </span>
+            </>
+          )}
         </section>
       </Nav>
     </Header>

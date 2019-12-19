@@ -12,8 +12,8 @@ const router = express();
 
 const db = "mongodb://mongo:27017";
 
-connect({ db });
 applyMiddleware(middleware, router);
+connect({ db });
 applyRoutes(routes, router);
 
 const server = http.createServer(router);

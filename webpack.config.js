@@ -34,7 +34,10 @@ module.exports = env => ({
     historyApiFallback: true,
     index: "index.html",
     port: 3015,
-    host: "0.0.0.0"
+    host: "0.0.0.0",
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    }
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"]

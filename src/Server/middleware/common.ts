@@ -6,7 +6,7 @@ import morgan from "morgan";
 import path from "path";
 
 export const handleCors = (router: Router) => {
-  router.use(cors({ credentials: true, origin: true }));
+  router.use(cors());
 };
 export const handleBodyRequestParsing = (router: Router) => {
   router.use(parser.urlencoded({ extended: true, limit: "50mb" }));

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Routes from "./Routes";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import { useAuth0 } from "./react-auth0-spa";
 
 const Main = styled.main`
   width: 100%;
@@ -16,6 +17,11 @@ const AppContainer = styled.div`
 `;
 
 export default function App() {
+  const { loading } = useAuth0();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <Main>
       <AppContainer>
