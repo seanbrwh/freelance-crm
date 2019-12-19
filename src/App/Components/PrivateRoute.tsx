@@ -2,7 +2,16 @@ import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { useAuth0 } from "../react-auth0-spa";
 
-const PrivateRoute = ({ component: Component, path, ...rest }) => {
+type Rest = {
+  [x: string]: any;
+};
+interface Private {
+  component: any;
+  path: string;
+  rest?: Rest;
+}
+
+const PrivateRoute = ({ component: Component, path, ...rest }: Private) => {
   const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
@@ -17,7 +26,7 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => {
     fn();
   }, [loading, isAuthenticated, loginWithRedirect, path]);
 
-  const render = props =>
+  const render = (props: any) =>
     isAuthenticated === true ? <Component {...props} /> : null;
 
   return <Route path={path} render={render} {...rest} />;

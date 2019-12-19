@@ -7,6 +7,7 @@ interface AUTH0PROVIDER {
   domain: any;
   client_id: any;
   redirectUri: any;
+  audience: any;
 }
 
 const DEFAULT_REDIRECT_CALLBACK = () =>

@@ -1,20 +1,16 @@
+import { checkJWT } from "./../middleware/common";
 import "dotenv/config";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import UserController from "../controllers/User.controller";
-
-const { LOCAL } = process.env;
 
 export default [
   {
-    path: "*",
+    path: "/api/test",
     method: "get",
     handler: [
+      checkJWT,
       (req: Request, res: Response) => {
-        res.render("index", {
-          jsMainFile: LOCAL
-            ? "http://localhost:3015/freelance-crm.js"
-            : require("./dist/static/manifest.json")["freelance-crm.js"]
-        });
+        res.send({ msg: "you have authenticated" });
       }
     ]
   }

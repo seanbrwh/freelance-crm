@@ -1,19 +1,40 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { useAuth0 } from "../react-auth0-spa";
 
 export default function Dashboard() {
-  const { loading, user } = useAuth0();
+  const [showResult, setShowResult] = useState(false);
+  const [apiMessage, setApiMessage] = useState("");
+
+  const { loading, user, getTokenSilently } = useAuth0();
 
   if (loading || !user) {
     return <div>Loading</div>;
   }
+  const callApi = async () => {
+    try {
+      const token = await getTokenSilently();
+      const response = await fetch("/api/test", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const responseData = await response.json();
+      setShowResult(true);
+      setApiMessage(responseData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Fragment>
       <img src={user.picture} alt="User photo" />
       <h2>{user.name}</h2>
       <p>{user.email}</p>
-      <code>{JSON.stringify(user, null, 2)}</code>
+      <button onClick={callApi}>Ping API</button>
+      {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
+      {/* <code>{JSON.stringify(user, null, 2)}</code> */}
     </Fragment>
   );
 }

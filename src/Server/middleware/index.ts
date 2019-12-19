@@ -5,7 +5,8 @@ import {
   handleLogging,
   setBasePath,
   setViewEngine,
-  setStaticPath
+  setStaticPath,
+  serveIndex
 } from "./common";
 
 export default [
@@ -15,5 +16,6 @@ export default [
   handleLogging,
   setBasePath,
   setViewEngine,
-  setStaticPath
+  setStaticPath,
+  serveIndex
 ];

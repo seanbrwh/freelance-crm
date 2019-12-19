@@ -1,4 +1,5 @@
 {
   "domain": "dev-ib51uhnr.auth0.com",
-  "clientId": "URRCIW5Nhy2NQpPBhDCXk7QnGSTt6Nmh"
+  "clientId": "URRCIW5Nhy2NQpPBhDCXk7QnGSTt6Nmh",
+  "audience": "freelance-crm"
 }
