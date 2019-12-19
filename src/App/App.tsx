@@ -7,12 +7,12 @@ import { useAuth0 } from "./react-auth0-spa";
 
 const Main = styled.main`
   width: 100%;
-  height: calc(100vh -3rem);
+  height: calc(300vh -3rem);
   margin-top: 3rem;
 `;
 const AppContainer = styled.div`
   width: 70%;
-  height: 100%;
+  height: inherit;
   margin: 0 auto;
 `;
 

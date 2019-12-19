@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { useAuth0 } from "../react-auth0-spa";
 
 type Rest = {
@@ -12,22 +12,16 @@ interface Private {
 }
 
 const PrivateRoute = ({ component: Component, path, ...rest }: Private) => {
-  const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
+  const { loading, isAuthenticated } = useAuth0();
 
   useEffect(() => {
     if (loading || isAuthenticated) {
       return;
     }
-    const fn = async () => {
-      await loginWithRedirect({
-        appState: { targetUrl: path }
-      });
-    };
-    fn();
-  }, [loading, isAuthenticated, loginWithRedirect, path]);
+  }, [loading, isAuthenticated]);
 
   const render = (props: any) =>
-    isAuthenticated === true ? <Component {...props} /> : null;
+    isAuthenticated === true ? <Component {...props} /> : <Redirect to="/" />;
 
   return <Route path={path} render={render} {...rest} />;
 };

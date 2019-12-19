@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Foot = styled.footer``;
+const Foot = styled.footer`
+  position: absolute;
+  bottom: inherit;
+  width: inherit;
+  height: 30rem;
+`;
 const FootSection = styled.section``;
 const Copyright = styled.div``;
 
