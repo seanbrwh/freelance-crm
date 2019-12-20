@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 interface ButtonProps {
   onClick?(): void;
-  label: string;
+  label?: string;
   children?: any;
   primary?: boolean;
   invert?: boolean;
@@ -13,9 +13,10 @@ const Button: React.SFC<ButtonProps> = ({
   onClick,
   label,
   primary,
-  invert
+  invert,
+  children
 }) => {
-  const IButton = styled.input`
+  const IButton = styled.button`
     background: ${primary ? "white" : "#00B98F"};
     color: ${primary ? "#00B98F" : "white"};
     font-size: 1em;
@@ -30,12 +31,9 @@ const Button: React.SFC<ButtonProps> = ({
       box-shadow: ${!invert ? "2px 2px 2px 1px rgba(0, 0, 0, 0.2)" : ""}
   `;
   return (
-    <IButton
-      type="button"
-      name="button"
-      onClick={onClick}
-      value={label}
-    ></IButton>
+    <IButton type="button" name="button" onClick={onClick} value={label}>
+      {!children ? label : children}
+    </IButton>
   );
 };
 export default Button;

@@ -3,19 +3,21 @@ import styled from "styled-components";
 import { useAuth0 } from "../react-auth0-spa";
 import { Link } from "react-router-dom";
 import Button from "./Inputs/Button";
+import Dropdown from "./Dropdown";
 
 const Header = styled.header`
   width: inherit;
   position: fixed;
   top: 0;
+  background: #fafafa;
 `;
 
 const Nav = styled.nav`
-  height: 3rem;
+  height: 5rem;
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const Ul = styled.ul`
@@ -28,34 +30,51 @@ export default function Navbar() {
     <Header>
       <Nav>
         <section>
-          <img src="" alt="Brand Logo" />
+          <Link to="/">
+            <img src="" alt="Brand Logo" />
+          </Link>
         </section>
-        <Ul>
-          <li>Product</li>
-          <li>Resources</li>
-        </Ul>
-        <section>
-          {!isAuthenticated && (
-            <>
-              <Button
-                onClick={() => loginWithRedirect({})}
-                label="Sign in"
-                primary
-                invert
-              />
+        <section
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center"
+          }}
+        >
+          <div>
+            <Dropdown
+              label="products"
+              items={["Propsals", "Time tracking", "Contracts"]}
+            />
+            <Dropdown
+              label="Resources"
+              items={["Freelance rates", "Freelance resources"]}
+            />
+          </div>
+          <div>
+            {!isAuthenticated && (
+              <>
+                <Button
+                  onClick={() => loginWithRedirect({})}
+                  label="Sign in"
+                  primary
+                  invert
+                />
 
-              <Button label="Get started" />
-            </>
-          )}
-          {isAuthenticated && (
-            <>
-              <Button onClick={() => logout()} label="Sign out" />
-              <span>
-                <Link to="/">Home</Link>
-                <Link to="/dashboard">Dashboard</Link>
-              </span>
-            </>
-          )}
+                <Button label="Get started" />
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <Button onClick={() => logout()} label="Sign out" />
+                <span>
+                  <Button>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </Button>
+                </span>
+              </>
+            )}
+          </div>
         </section>
       </Nav>
     </Header>
