@@ -12,7 +12,7 @@ const Main = styled.main`
   margin-top: 3rem;
 `;
 const AppContainer = styled.div`
-  width: 70%;
+  width: 80%;
   height: inherit;
   margin: 0 auto;
 `;
@@ -34,11 +34,11 @@ export default function App() {
       {deviceWidth < 1000 ? (
         <Mobile />
       ) : (
-        <AppContainer>
+        <>
           <Navbar />
-          {Routes}
+          <AppContainer>{Routes}</AppContainer>
           <Footer />
-        </AppContainer>
+        </>
       )}
     </Main>
   );

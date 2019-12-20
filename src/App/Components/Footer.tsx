@@ -11,6 +11,8 @@ const Foot = styled.footer`
 const FootGroup = styled.div`
   display: flex;
   justify-content: space-evenly;
+  width: 70%;
+  margin: 0 auto;
 `;
 const FootSection = styled.section`
   width: 15rem;
@@ -75,6 +77,10 @@ export default function Footer() {
           <p>Best freelance websites</p>
           <h3>Insights</h3>
           <p>Freelance blog</p>
+          <h3>Other</h3>
+          <p>Freelance tax calculator</p>
+          <p>Stripe fee calculator</p>
+          <p>PayPal fee calculator</p>
         </FootSection>
         <FootSection>
           <h2>Freelance CRM</h2>
@@ -92,6 +98,10 @@ export default function Footer() {
       </FootGroup>
       <Copyright>
         <div>&copy; 2019 Sean Bryan White</div>
+        <div>
+          This is not a law firm, does not provide legal services or advice, and
+          does not provide or participate in legal representation.
+        </div>
       </Copyright>
     </Foot>
   );
