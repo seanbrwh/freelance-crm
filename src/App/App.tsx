@@ -4,6 +4,7 @@ import Routes from "./Routes";
 import Mobile from "./Components/Mobile";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import Loading from "./Components/Loading";
 import { useAuth0 } from "./react-auth0-spa";
 
 const Main = styled.main`
@@ -27,7 +28,7 @@ export default function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <Main>
