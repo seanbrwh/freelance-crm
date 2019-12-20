@@ -19,13 +19,12 @@ module.exports = env => ({
         use: "babel-loader"
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {}
-          }
-        ]
+        test: /\.(png|jpe?g|gif|svg)$/,
+        loader: "file-loader",
+        options: {
+          name: env.LOCAL ? "[path][name].[ext]" : "[contenthash].[ext]",
+          publicPath: env.PUBLIC_PATH || "/dist/static/assets/"
+        }
       }
     ]
   },

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="39.6875mm"
+   height="40.273067mm"
+   viewBox="0 0 39.6875 40.273067"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="freelance-logo.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2"
+     inkscape:cx="24.065654"
+     inkscape:cy="84.690397"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showborder="false"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     inkscape:snap-nodes="false"
+     inkscape:window-width="1874"
+     inkscape:window-height="1016"
+     inkscape:window-x="686"
+     inkscape:window-y="1107"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="141.33916,49.255202"
+       orientation="0,1"
+       id="guide4520"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="134.18935,83.586882"
+       orientation="1,0"
+       id="guide4522"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="46.171835,35.521672"
+       orientation="1,0"
+       id="guide4582"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="95.566245,29.146872"
+       orientation="1,0"
+       id="guide4599"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(200.60583,-157.154)">
+    <g
+       id="g4613"
+       transform="matrix(0.85838047,0,0,0.85838047,-28.409703,27.959529)">
+      <g
+         style="fill:#aaccff"
+         id="g4576">
+        <path
+           style="fill:#aaccff;stroke:none;stroke-width:0.20516361"
+           d="m -200.60582,164.35416 h 33.07292 v 10.85109 h -33.07292 z"
+           id="rect4566"
+           inkscape:connector-curvature="0" />
+        <path
+           transform="matrix(0.00453076,0.99998974,-0.99999844,0.0017678,0,0)"
+           style="fill:#aaccff;stroke:none;stroke-width:0.20510538"
+           d="m 164.01907,190.49817 h 33.05408 v 10.8511 h -33.05408 z"
+           id="rect4568"
+           inkscape:connector-curvature="0" />
+      </g>
+      <path
+         style="fill:#808080;stroke:none;stroke-width:0.19931613"
+         d="m -185.58488,186.57593 h 31.21438 v 10.85114 h -31.21438 z"
+         id="rect4603"
+         inkscape:connector-curvature="0" />
+      <path
+         transform="rotate(-90)"
+         style="fill:#808080;stroke:none;stroke-width:0.24243703"
+         d="m -197.42706,-185.58488 h 46.18147 v 10.85114 h -46.18147 z"
+         id="rect4605"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:#aaccff;stroke:none;stroke-width:0.24243703"
+         d="m -200.60582,150.50957 h 46.18148 v 10.85114 h -46.18148 z"
+         id="rect4564"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

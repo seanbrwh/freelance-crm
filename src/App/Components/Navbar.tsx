@@ -4,6 +4,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import { Link } from "react-router-dom";
 import Button from "./Inputs/Button";
 import Dropdown from "./Dropdown";
+import Freelance from "../Assets/freelancelogo.svg";
 
 const Header = styled.header`
   width: 100%;
@@ -25,15 +26,17 @@ const Ul = styled.ul`
   display: flex;
 `;
 
+const Img = styled.img`
+  max-height: 3rem;
+`;
+
 export default function Navbar() {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   return (
     <Header>
       <Nav>
         <section>
-          <Link to="/">
-            <img src="" alt="Brand Logo" />
-          </Link>
+          <Img src={Freelance} alt="Brand Logo" />
         </section>
         <section
           style={{

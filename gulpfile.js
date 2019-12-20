@@ -16,4 +16,8 @@ gulp.task("rename-env", () => {
     .pipe(gulp.dest("."));
 });
 
-gulp.task("default", gulp.parallel("cpdir", "cppack", "rename-env"));
+gulp.task("assets", () => {
+  return gulp.src(["src/Server/assets/**/*"]).pipe(gulp.dest("dist/assets"));
+});
+
+gulp.task("default", gulp.parallel("cpdir", "cppack", "rename-env", "assets"));
