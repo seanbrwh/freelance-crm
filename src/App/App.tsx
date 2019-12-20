@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Routes from "./Routes";
+import Mobile from "./Components/Mobile";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import { useAuth0 } from "./react-auth0-spa";
@@ -17,18 +18,28 @@ const AppContainer = styled.div`
 `;
 
 export default function App() {
+  var [deviceWidth, setDeviceWidth] = React.useState();
   const { loading } = useAuth0();
+
+  React.useEffect(() => {
+    deviceWidth = window.innerWidth;
+    setDeviceWidth(deviceWidth);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
   }
   return (
     <Main>
-      <AppContainer>
-        <Navbar />
-        {Routes}
-        <Footer />
-      </AppContainer>
+      {deviceWidth < 1000 ? (
+        <Mobile />
+      ) : (
+        <AppContainer>
+          <Navbar />
+          {Routes}
+          <Footer />
+        </AppContainer>
+      )}
     </Main>
   );
 }

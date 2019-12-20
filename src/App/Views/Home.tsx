@@ -17,23 +17,25 @@ const SubSection = styled.section`
 
 export default function Home() {
   return (
-    <div>
+    <>
       <MainSection>
-        <SubSection>Call To action</SubSection>
+        <SubSection>
+          Sweat the project not the details. All-in-one freelance customer
+          relation management.
+        </SubSection>
         <SubSection>Feature explore</SubSection>
       </MainSection>
       <MainSection>
-        <SubSection>Feature explain</SubSection>
+        <SubSection>
+          Create proposals, keep track of time, and send out contracts in a
+          timely manner
+        </SubSection>
         <SubSection>Call to action</SubSection>
       </MainSection>
       <MainSection>
-        <SubSection>Product explaination</SubSection>
+        <SubSection>Never worry about the little things again. </SubSection>
         <SubSection>Call to action</SubSection>
       </MainSection>
-      <MainSection>
-        <SubSection>Area coverage</SubSection>
-        <SubSection>Call to action</SubSection>
-      </MainSection>
-    </div>
+    </>
   );
 }

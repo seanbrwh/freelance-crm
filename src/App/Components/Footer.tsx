@@ -6,17 +6,93 @@ const Foot = styled.footer`
   bottom: inherit;
   width: inherit;
   height: 30rem;
+  background: #353736;
 `;
-const FootSection = styled.section``;
-const Copyright = styled.div``;
+const FootGroup = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+const FootSection = styled.section`
+  width: 15rem;
+  height: 15rem;
+  margin: 1rem;
+  padding: 1rem;
+  font-family: "Open Sans", sans-serif;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  h2 {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: white;
+  }
+  h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: white;
+  }
+  p {
+    font-size: 12px;
+    margin-left: 0.5rem;
+    margin-bottom: 6px;
+    color: #b1b1b1;
+    &:hover {
+      color: white;
+    }
+  }
+`;
+const Copyright = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  padding: 1rem 0;
+  color: white;
+  font-size: 12px;
+`;
 
 export default function Footer() {
   return (
     <Foot>
-      <FootSection>Solution</FootSection>
-      <FootSection>Resource</FootSection>
-      <FootSection>Company</FootSection>
-      <Copyright>&copy; 2019 Sean Bryan White</Copyright>
+      <FootGroup>
+        <FootSection>
+          <h2>Solution</h2>
+          <hr />
+          <h3>Product</h3>
+          <p>Proposal</p>
+          <p>Time Tracking</p>
+          <p>Contracts</p>
+          <h3>Templates</h3>
+          <p>Proposal</p>
+          <p>Contracts</p>
+          <h3>Pricing</h3>
+        </FootSection>
+        <FootSection>
+          <h2>Resource</h2>
+          <hr />
+          <h3>Research</h3>
+          <p>Freelance Rates</p>
+          <p>Best freelance websites</p>
+          <h3>Insights</h3>
+          <p>Freelance blog</p>
+        </FootSection>
+        <FootSection>
+          <h2>Freelance CRM</h2>
+          <hr />
+          <h3>Company</h3>
+          <p>About us</p>
+          <p>Careers</p>
+          <h3>Support</h3>
+          <p>FAQ</p>
+          <p>Email</p>
+          <h3>Social</h3>
+          <p>LinkedIn</p>
+          <p>Twitter</p>
+        </FootSection>
+      </FootGroup>
+      <Copyright>
+        <div>&copy; 2019 Sean Bryan White</div>
+      </Copyright>
     </Foot>
   );
 }
