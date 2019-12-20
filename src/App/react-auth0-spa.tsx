@@ -1,26 +1,22 @@
 import * as React from "react";
 import auth0Js from "auth0-js";
 import history from "./utils/history";
-let { DOMAIN, CLIENT_ID, AUTH_CALLBACK } = process.env;
+import config from "../../auth_config.json";
+let { domain, clientID, redirectUri } = config;
 
 const { useState, createContext, useContext } = React;
 interface Auth0Props {
   children: any;
-  onRedirectCallback: any;
-  domain: any;
-  client_id: any;
-  redirectUri: any;
-  audience: any;
 }
 
-export const Auth0Context = React.createContext(null);
+export const Auth0Context = createContext(null);
 export const useAuth0 = () => useContext(Auth0Context);
 
-export const Auth0Provider = ({ children, ...initOptions }: Auth0Props) => {
+export const Auth0Provider = ({ children }: Auth0Props) => {
   const auth0 = new auth0Js.WebAuth({
-    domain: DOMAIN,
-    clientID: CLIENT_ID,
-    redirectUri: AUTH_CALLBACK,
+    domain: domain,
+    clientID: clientID,
+    redirectUri: redirectUri,
     responseType: "token id_token",
     scope: "openid profile email"
   });
@@ -29,29 +25,33 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0Props) => {
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
 
-  const googleLogin = () => {
-    auth0.authorize({ connection: "google" }, (err, authResult) => {});
-  };
+  // const googleLogin = () => {
+  //   auth0.authorize({ connection: "google" }, (err, authResult) => {});
+  // };
 
-  const facebookLogin = () => {
-    auth0.authorize({ connection: "facebook" }, (err, authResult) => {});
-  };
+  // const facebookLogin = () => {
+  //   auth0.authorize({ connection: "facebook" }, (err, authResult) => {});
+  // };
 
-  const githubLogin = () => {
-    auth0.authorize({ connection: "github" }, (err, authResult) => {});
-  };
+  // const githubLogin = () => {
+  //   auth0.authorize({ connection: "github" }, (err, authResult) => {});
+  // };
 
-  const linkedinLogin = () => {
-    auth0.authorize({ connection: "linkedin" }, (err, authResult) => {});
-  };
+  // const linkedinLogin = () => {
+  //   auth0.authorize({ connection: "linkedin" }, (err, authResult) => {});
+  // };
 
-  const traditionalLogin = (email, username, password) => {
+  const traditionalLogin = (
+    email?: string,
+    username?: string,
+    password?: string
+  ) => {
     auth0.login(
       { realm: "test", email: "", username: "", password: "" },
       err => {}
     );
   };
-  const passwordlessStart = email => {
+  const passwordlessStart = (email: any) => {
     auth0.passwordlessStart(
       {
         connection: "email",
@@ -62,7 +62,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0Props) => {
     );
   };
 
-  const passwordlessLogin = email => {
+  const passwordlessLogin = (email: any) => {
     auth0.passwordlessLogin(
       {
         connection: "email",
@@ -73,7 +73,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0Props) => {
     );
   };
 
-  const signUp = (email, pass) => {
+  const signUp = (email: any, pass: any) => {
     auth0.signup(
       {
         connection: "Username-Password-Authentication",
@@ -109,15 +109,18 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0Props) => {
 
   const handleAuthentication = () => {
     if (typeof window !== "undefined") {
-      auth0.parseHash({ hash: window.location.hash }, (err, authResult) => {
-        if (authResult && authResult.accessToken && authResult.idToken) {
-          setSession(authResult);
-          history.replace("/");
-        } else if (err) {
-          history.replace("/");
-          console.log(err);
+      auth0.parseHash(
+        { hash: window.location.hash },
+        (err, authResult: any) => {
+          if (authResult && authResult.accessToken && authResult.idToken) {
+            setSession(authResult);
+            history.replace("/");
+          } else if (err) {
+            history.replace("/");
+            console.log(err);
+          }
         }
-      });
+      );
     }
   };
 
@@ -126,7 +129,7 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0Props) => {
     return new Date().getTime() < expiresAt;
   };
 
-  const setSession = authResult => {
+  const setSession = (authResult: any) => {
     const expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
@@ -159,7 +162,15 @@ export const Auth0Provider = ({ children, ...initOptions }: Auth0Props) => {
     return accessToken;
   };
 
-  return <Auth0Context.Provider value={{}}>{children}</Auth0Context.Provider>;
+  return (
+    <Auth0Context.Provider
+      value={{
+        traditionalLogin: (...p: any[]) => traditionalLogin(...p)
+      }}
+    >
+      {children}
+    </Auth0Context.Provider>
+  );
 };
 
 // const DEFAULT_REDIRECT_CALLBACK = () =>

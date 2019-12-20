@@ -17,16 +17,16 @@ const Button: React.SFC<ButtonProps> = ({
   children
 }) => {
   const IButton = styled.button`
-    background: ${primary ? "white" : "#00B98F"};
-    color: ${primary ? "#00B98F" : "white"};
+    background: ${primary ? "white" : "#AACCFF"};
+    color: ${primary ? "#AACCFF" : "white"};
     font-size: 1em;
     margin: 1em;
     padding: 0.25em 1em;
-    border: 2px solid #00b98f;
+    border: 2px solid #AACCFF;
     border-radius: 3px;
 
     &:hover {
-      background: ${invert ? "#00B98F" : ""}
+      background: ${invert ? "#AACCFF" : ""}
       color: ${invert ? "white" : ""};
       box-shadow: ${!invert ? "2px 2px 2px 1px rgba(0, 0, 0, 0.2)" : ""}
   `;

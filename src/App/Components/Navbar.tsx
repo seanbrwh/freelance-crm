@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAuth0 } from "../react-auth0-spa";
 import { Link, Redirect } from "react-router-dom";
 import Button from "./Inputs/Button";
 import Dropdown from "./Dropdown";
+import Modal from "../Components/Modal";
 import Freelance from "../Assets/freelancelogo.svg";
 
 const Header = styled.header`
@@ -31,6 +32,7 @@ const Img = styled.img`
 `;
 
 export default function Navbar() {
+  var [signInModal, setSignInModal] = useState(false);
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   return (
     <Header>
@@ -56,29 +58,15 @@ export default function Navbar() {
             />
           </div>
           <div>
-            {!isAuthenticated && (
-              <>
-                <Button
-                  onClick={() => loginWithRedirect({})}
-                  label="Sign in"
-                  primary
-                  invert
-                />
-
-                <Button label="Get started" />
-              </>
-            )}
-
-            {isAuthenticated && (
-              <>
-                <Button onClick={() => logout()} label="Sign out" />
-                <span>
-                  <Button>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </Button>
-                </span>
-              </>
-            )}
+            <Button
+              label="Sign in"
+              primary
+              invert
+              onClick={() => setSignInModal(true)}
+            />
+            <Modal handleClose={() => setSignInModal(false)} show={signInModal}>
+              <input type="text" value="UserName" />
+            </Modal>
           </div>
         </section>
       </Nav>

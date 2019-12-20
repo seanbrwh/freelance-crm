@@ -5,22 +5,8 @@ import { Auth0Provider } from "./react-auth0-spa";
 import history from "./utils/history";
 import App from "./App";
 
-const onRedirectCallback = (appState?: any) => {
-  history.push(
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-  );
-};
-
 ReactDOM.render(
-  <Auth0Provider
-    domain={config.domain}
-    client_id={config.clientId}
-    redirectUri={window.location.origin}
-    audience={config.audience}
-    onRedirectCallback={onRedirectCallback}
-  >
+  <Auth0Provider>
     <Router history={history}>
       <App />
     </Router>
