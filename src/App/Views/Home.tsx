@@ -20,8 +20,7 @@ export default function Home() {
     <>
       <MainSection>
         <SubSection>
-          Sweat the project not the details. All-in-one freelance customer
-          relation management.
+          Sweat the project not the details. All-in-one freelance solution.
         </SubSection>
         <SubSection>Feature explore</SubSection>
       </MainSection>

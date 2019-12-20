@@ -1,5 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { useAuth0 } from "../react-auth0-spa";
+import styled from "styled-components";
+
+const Main = styled.div`
+  width: 100%;
+  height: 100vh;
+`;
 
 export default function Dashboard() {
   const [showResult, setShowResult] = useState(false);
@@ -29,13 +35,13 @@ export default function Dashboard() {
   };
 
   return (
-    <Fragment>
+    <Main>
       <img src={user.picture} alt="User photo" />
       <h2>{user.name}</h2>
       <p>{user.email}</p>
       <button onClick={callApi}>Ping API</button>
       {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
       {/* <code>{JSON.stringify(user, null, 2)}</code> */}
-    </Fragment>
+    </Main>
   );
 }

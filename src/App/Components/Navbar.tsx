@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useAuth0 } from "../react-auth0-spa";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Button from "./Inputs/Button";
 import Dropdown from "./Dropdown";
 import Freelance from "../Assets/freelancelogo.svg";
@@ -68,6 +68,7 @@ export default function Navbar() {
                 <Button label="Get started" />
               </>
             )}
+
             {isAuthenticated && (
               <>
                 <Button onClick={() => logout()} label="Sign out" />
