@@ -33,7 +33,12 @@ const Img = styled.img`
 
 export default function Navbar() {
   var [signInModal, setSignInModal] = useState(false);
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const {
+    isAuthenticated,
+    loginWithRedirect,
+    logout,
+    traditionalLogin
+  } = useAuth0();
   return (
     <Header>
       <Nav>
@@ -65,7 +70,12 @@ export default function Navbar() {
               onClick={() => setSignInModal(true)}
             />
             <Modal handleClose={() => setSignInModal(false)} show={signInModal}>
-              <input type="text" value="UserName" />
+              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Password" />
+              <Button
+                label="Sign in"
+                onClick={() => traditionalLogin("sean", "something")}
+              />
             </Modal>
           </div>
         </section>

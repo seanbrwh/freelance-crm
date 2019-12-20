@@ -7,6 +7,7 @@ let { domain, clientID, redirectUri } = config;
 const { useState, createContext, useContext } = React;
 interface Auth0Props {
   children: any;
+  TraditionalLogin?(): any;
 }
 
 export const Auth0Context = createContext(null);
@@ -25,21 +26,21 @@ export const Auth0Provider = ({ children }: Auth0Props) => {
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
 
-  // const googleLogin = () => {
-  //   auth0.authorize({ connection: "google" }, (err, authResult) => {});
-  // };
+  const googleLogin = () => {
+    auth0.authorize({ connection: "google" });
+  };
 
-  // const facebookLogin = () => {
-  //   auth0.authorize({ connection: "facebook" }, (err, authResult) => {});
-  // };
+  const facebookLogin = () => {
+    auth0.authorize({ connection: "facebook" });
+  };
 
-  // const githubLogin = () => {
-  //   auth0.authorize({ connection: "github" }, (err, authResult) => {});
-  // };
+  const githubLogin = () => {
+    auth0.authorize({ connection: "github" });
+  };
 
-  // const linkedinLogin = () => {
-  //   auth0.authorize({ connection: "linkedin" }, (err, authResult) => {});
-  // };
+  const linkedinLogin = () => {
+    auth0.authorize({ connection: "linkedin" });
+  };
 
   const traditionalLogin = (
     email?: string,
@@ -47,9 +48,10 @@ export const Auth0Provider = ({ children }: Auth0Props) => {
     password?: string
   ) => {
     auth0.login(
-      { realm: "test", email: "", username: "", password: "" },
+      { realm: "test", email: email, username: username, password: password },
       err => {}
     );
+    handleAuthentication();
   };
   const passwordlessStart = (email: any) => {
     auth0.passwordlessStart(

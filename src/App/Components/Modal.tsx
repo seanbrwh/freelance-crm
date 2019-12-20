@@ -20,7 +20,7 @@ export default function Modal({ handleClose, show, children }: ModalProps) {
   const ModalMain = styled.div`
     position: fixed;
     background: #acacac;
-    width: 40%;
+    width: 30%;
     height: auto;
     top: 50%;
     left: 50%;
