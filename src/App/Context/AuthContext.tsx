@@ -38,7 +38,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         email: email,
         password: pass
       },
-      err => {}
+      err => {
+        if (err) {
+          console.error(err);
+        } else {
+          handleAuthentication();
+        }
+      }
     );
   };
 

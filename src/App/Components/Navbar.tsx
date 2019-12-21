@@ -68,12 +68,12 @@ export default function Navbar() {
             />
           </div>
           <div>
-            <Button label="Sign in" primary invert>
-              <Link to="/sign-in">Sign In</Link>
-            </Button>
-            <Button label="Sign up">
-              <Link to="/sign-up">Sign Up</Link>
-            </Button>
+            <Link to="/sign-in">
+              <Button label="Sign in" primary invert />
+            </Link>
+            <Link to="/sign-up">
+              <Button label="Sign up" />
+            </Link>
           </div>
         </section>
       </Nav>
