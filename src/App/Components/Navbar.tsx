@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { useAuth0 } from "../react-auth0-spa";
 import { Link, Redirect } from "react-router-dom";
 import Button from "./Inputs/Button";
 import Dropdown from "./Dropdown";
 import Modal from "../Components/Modal";
 import Freelance from "../Assets/freelancelogo.svg";
+import { AuthContext } from "../Context/AuthContext";
 
 const Header = styled.header`
   width: 100%;
@@ -33,12 +33,11 @@ const Img = styled.img`
 
 export default function Navbar() {
   var [signInModal, setSignInModal] = useState(false);
-  const {
-    isAuthenticated,
-    loginWithRedirect,
-    logout,
-    traditionalLogin
-  } = useAuth0();
+  var [userName, setUserName] = useState();
+  var [email, setEmail] = useState();
+  var [password, setPassword] = useState();
+  var Auth = useContext(AuthContext);
+
   return (
     <Header>
       <Nav>
@@ -55,7 +54,7 @@ export default function Navbar() {
           <div>
             <Dropdown
               label="products"
-              items={["Propsals", "Time tracking", "Contracts"]}
+              items={["Proposals", "Time tracking", "Contracts"]}
             />
             <Dropdown
               label="Resources"
@@ -70,11 +69,49 @@ export default function Navbar() {
               onClick={() => setSignInModal(true)}
             />
             <Modal handleClose={() => setSignInModal(false)} show={signInModal}>
-              <input type="text" placeholder="Username" />
-              <input type="text" placeholder="Password" />
+              <input
+                type="text"
+                placeholder="Username"
+                value={userName}
+                onChange={evt =>
+                  function() {
+                    evt.stopPropagation();
+                    setUserName(evt.target.value);
+                  }
+                }
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={evt =>
+                  function() {
+                    evt.stopPropagation();
+                    setEmail(evt.target.value);
+                  }
+                }
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={evt =>
+                  function() {
+                    evt.stopPropagation();
+                    setPassword(evt.target.value);
+                  }
+                }
+                onBlur={evt =>
+                  function() {
+                    evt.stopPropagation();
+                    setPassword(evt.target.value);
+                  }
+                }
+              />
+
               <Button
                 label="Sign in"
-                onClick={() => traditionalLogin("sean", "something")}
+                onClick={() => Auth.traditionalLogin(email, userName, password)}
               />
             </Modal>
           </div>

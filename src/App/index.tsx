@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Router } from "react-router-dom";
-import { Auth0Provider } from "./react-auth0-spa";
+import AuthProvider from "./Context/AuthContext";
 import history from "./utils/history";
 import App from "./App";
 
 ReactDOM.render(
-  <Auth0Provider>
+  <AuthProvider>
     <Router history={history}>
       <App />
     </Router>
-  </Auth0Provider>,
+  </AuthProvider>,
   document.getElementById("root")
 );

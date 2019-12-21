@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 interface ModalProps {
-  handleClose(): void;
+  handleClose(evt: any): any;
   show: boolean;
-  children?: any;
+  children: any;
 }
 
 export default function Modal({ handleClose, show, children }: ModalProps) {

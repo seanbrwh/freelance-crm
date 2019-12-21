@@ -5,7 +5,6 @@ import Mobile from "./Components/Mobile";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Loading from "./Components/Loading";
-import { useAuth0 } from "./react-auth0-spa";
 
 const Main = styled.main`
   width: 100%;
@@ -20,8 +19,7 @@ const AppContainer = styled.div`
 
 export default function App() {
   var [deviceWidth, setDeviceWidth] = React.useState();
-  const { loading } = useAuth0();
-
+  var [loading, setLoading] = React.useState(false);
   React.useEffect(() => {
     deviceWidth = window.innerWidth;
     setDeviceWidth(deviceWidth);
