@@ -6,7 +6,7 @@ import routes from "./routes";
 import middleware from "./middleware";
 import connect from "./connect";
 
-const { PORT } = process.env;
+const { PORT, NODE_ENV } = process.env;
 
 const router = express();
 

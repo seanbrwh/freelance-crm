@@ -13,6 +13,5 @@ export default (
     <Route path="/sign-in" component={SignIn} />
     <Route path="/sign-up" component={SignUp} />
     <Route path="/callback" component={Callback} />
-    <PrivateRoute path="/dashboard" component={Dashboard} />
   </Switch>
 );

@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
-import { AuthContext } from "../Context/AuthContext";
 import Button from "./Inputs/Button";
 import Dropdown from "./Dropdown";
 import Freelance from "../Assets/freelancelogo.svg";
@@ -42,10 +41,6 @@ const Img = styled.img`
 `;
 
 export default function Navbar() {
-  const Auth = useContext(AuthContext);
-
-  let { isAuthenticated, logout } = Auth;
-
   return (
     <Header>
       <Nav>
@@ -73,20 +68,14 @@ export default function Navbar() {
             />
           </div>
           <div>
-            {!isAuthenticated() ? (
-              <>
-                <Link to="/sign-in">
-                  <Button label="Sign in" primary invert />
-                </Link>
-                <Link to="/sign-up">
-                  <Button label="Sign up" />
-                </Link>
-              </>
-            ) : (
-              <>
-                <Button label="Sign out" onClick={() => logout()} />
-              </>
-            )}
+            <>
+              <Link to="/sign-in">
+                <Button label="Sign in" primary invert />
+              </Link>
+              <Link to="/sign-up">
+                <Button label="Sign up" />
+              </Link>
+            </>
           </div>
         </section>
       </Nav>

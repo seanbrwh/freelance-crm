@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { AuthContext } from "../Context/AuthContext";
 import Input from "../Components/Inputs/Input";
 import Button from "../Components/Inputs/Button";
 import Checkbox from "../Components/Inputs/Checkbox";
@@ -17,9 +16,6 @@ const Main = styled.section`
 export default function SignIn() {
   var [email, setEmail] = useState("");
   var [pswd, setPswd] = useState("");
-  let Auth = useContext(AuthContext);
-
-  let { login } = Auth;
 
   return (
     <>
@@ -37,7 +33,7 @@ export default function SignIn() {
             placeholder="Password"
             type="password"
           />
-          <Button label="sign in" onClick={() => login(email, pswd)} />
+          <Button label="sign in" />
           <Checkbox label="Remember me" />
           <p>Reset password</p>
           <p>&nbsp;</p>

@@ -4,7 +4,6 @@ import Routes from "./Routes";
 import Mobile from "./Components/Mobile";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
-import Loading from "./Components/Loading";
 
 const Main = styled.main`
   width: 100%;
@@ -19,15 +18,11 @@ const AppContainer = styled.div`
 
 export default function App() {
   var [deviceWidth, setDeviceWidth] = React.useState();
-  var [loading, setLoading] = React.useState(false);
   React.useEffect(() => {
     deviceWidth = window.innerWidth;
     setDeviceWidth(deviceWidth);
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <Main>
       {deviceWidth < 1000 ? (

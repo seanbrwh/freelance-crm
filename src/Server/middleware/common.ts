@@ -4,27 +4,22 @@ import parser from "body-parser";
 import compress from "compression";
 import morgan from "morgan";
 import path from "path";
-import jwt from "express-jwt";
-import jwksRsa from "jwks-rsa";
+import jwt from "jsonwebtoken";
 
 const { LOCAL } = process.env;
 
-const authConfig = {
-  domain: "dev-ib51uhnr.auth0.com",
-  audience: "freelance/crm/api"
+export const signToken = (user: any) => {
+  let { _id, email } = user;
+  const JWTToken = jwt.sign(
+    {
+      email: email,
+      _id: _id
+    },
+    "secret",
+    { expiresIn: "2h" }
+  );
+  return JWTToken;
 };
-
-export const checkJWT = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
-  }),
-  audience: authConfig.audience,
-  issuer: `https://${authConfig.domain}/`,
-  algorithm: ["RSA256"]
-});
 
 export const handleCors = (router: Router) => {
   router.use(cors());
@@ -53,7 +48,7 @@ export const setStaticPath = (router: Router) => {
 };
 export const serveIndex = (router: Router) => {
   router.use("*", (req, res, next) => {
-    if (req.headers.authorization) {
+    if (req.originalUrl.includes("/api")) {
       return next();
     } else {
       res.setHeader("Cache-Control", "no-store");
