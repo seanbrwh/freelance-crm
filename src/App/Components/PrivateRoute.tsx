@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useAuth0 } from "../react-auth0-spa";
+import { AuthContext } from "../Context/AuthContext";
 
 type Rest = {
   [x: string]: any;
@@ -12,16 +12,17 @@ interface Private {
 }
 
 const PrivateRoute = ({ component: Component, path, ...rest }: Private) => {
-  const { loading, isAuthenticated } = useAuth0();
+  let Auth = useContext(AuthContext);
+  let { isAuthenticated } = Auth;
 
   useEffect(() => {
-    if (loading || isAuthenticated) {
+    if (isAuthenticated()) {
       return;
     }
-  }, [loading, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const render = (props: any) =>
-    isAuthenticated === true ? <Component {...props} /> : <Redirect to="/" />;
+    isAuthenticated() === true ? <Component {...props} /> : <Redirect to="/" />;
 
   return <Route path={path} render={render} {...rest} />;
 };

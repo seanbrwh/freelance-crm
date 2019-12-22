@@ -20,10 +20,6 @@ export default function SignUp() {
 
   var auth = useContext(AuthContext);
 
-  useEffect(() => {
-    console.log(auth);
-  }, []);
-
   return (
     <>
       <Main>

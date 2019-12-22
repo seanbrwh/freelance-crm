@@ -16,58 +16,69 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     clientID: clientID,
     redirectUri: redirectUri,
     responseType: "token id_token",
-    scope: "openid profile email"
+    scope: "openid profile email",
+    audience: "freelance/crm/api"
   });
-  const [user, setUser] = useState({ name: "Sean" });
 
-  const traditionalLogin = (
-    email?: string,
-    username?: string,
-    password?: string
-  ) => {
-    console.log(email, username, password);
+  const login = (email?: string, password?: string) => {
     auth0.login(
-      { realm: "test", email: email, username: username, password: password },
-      err => {}
-    );
-  };
-  const signUp = (email?: any, pass?: any) => {
-    auth0.signup(
       {
-        connection: "Username-Password-Authentication",
+        realm: "Username-Password-Authentication",
         email: email,
-        password: pass
+        password: password
       },
-      err => {
+      (err, authResult) => {
         if (err) {
           console.error(err);
         } else {
-          handleAuthentication();
+          console.log(authResult);
         }
       }
     );
   };
 
-  const passwordReset = () => {
+  const signUp = (email?: any, pass?: any) => {
+    auth0.signupAndAuthorize(
+      {
+        connection: "Username-Password-Authentication",
+        email: email,
+        password: pass
+      },
+      (err, authResult) => {
+        if (err) {
+          console.error(err);
+        } else {
+          setSession(authResult, "/dashboard");
+        }
+      }
+    );
+  };
+
+  const passwordReset = (email?: string) => {
     auth0.changePassword(
       {
-        connection: "",
-        email: ""
+        connection: "Username-Password-Authentication",
+        email: email
       },
       (err, resp) => {}
     );
   };
-  const tokenRenewal = () => {
-    auth0.checkSession({}, (err, authResult) => {});
+
+  const tokenRenewal = (location?: any) => {
+    auth0.checkSession({}, (err, authResult) => {
+      if (err) {
+        console.error(err);
+      } else {
+        setSession(authResult, location);
+      }
+    });
   };
 
   const logout = () => {
-    // Clear access token and ID token from local storage
     localStorage.removeItem("access_token");
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     localStorage.removeItem("user");
-
     history.replace("/");
   };
 
@@ -78,9 +89,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         (err, authResult: any) => {
           if (authResult && authResult.accessToken && authResult.idToken) {
             setSession(authResult);
-            history.replace("/");
+            history.replace("/dashboard");
           } else if (err) {
-            history.replace("/");
+            history.replace("/sign-in");
             console.log(err);
           }
         }
@@ -93,7 +104,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     return new Date().getTime() < expiresAt;
   };
 
-  const setSession = (authResult: any) => {
+  const setSession = (authResult: any, location?: any) => {
     const expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
@@ -101,8 +112,12 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.setItem("id_token", authResult.idToken);
     localStorage.setItem("expires_at", expiresAt);
     auth0.client.userInfo(authResult.accessToken, (err, user) => {
-      localStorage.setItem("user", JSON.stringify(user));
-      history.replace("/");
+      if (err) {
+        console.error(err);
+      } else {
+        localStorage.setItem("user", JSON.stringify(user));
+        history.replace(location);
+      }
     });
   };
 
@@ -129,7 +144,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
-        traditionalLogin: (...p: any | any[]) => traditionalLogin(...p),
+        login: (...p: any | any[]) => login(...p),
         signUp: (...p: any[]) => signUp(...p),
         passwordReset: () => passwordReset(),
         tokenRenewal: () => tokenRenewal(),
@@ -137,7 +152,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         isAuthenticated: () => isAuthenticated(),
         getUser: () => getUser(),
         getUserName: () => getUserName(),
-        getAccessToken: () => getAccessToken()
+        getAccessToken: () => getAccessToken(),
+        handleAuthentication: () => handleAuthentication()
       }}
     >
       {children}

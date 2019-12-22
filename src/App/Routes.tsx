@@ -5,13 +5,14 @@ import Dashboard from "./Views/Dashboard";
 import PrivateRoute from "./Components/PrivateRoute";
 import SignIn from "./Views/SignIn";
 import SignUp from "./Views/SignUp";
+import Callback from "./Views/Callback";
 
 export default (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/sign-in" component={SignIn} />
     <Route path="/sign-up" component={SignUp} />
-
+    <Route path="/callback" component={Callback} />
     <PrivateRoute path="/dashboard" component={Dashboard} />
   </Switch>
 );

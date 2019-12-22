@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { useAuth0 } from "../react-auth0-spa";
+import React, { Fragment, useState, useContext, useEffect } from "react";
+import { AuthContext } from "../Context/AuthContext";
 import styled from "styled-components";
 
 const Main = styled.div`
@@ -10,15 +10,22 @@ const Main = styled.div`
 export default function Dashboard() {
   const [showResult, setShowResult] = useState(false);
   const [apiMessage, setApiMessage] = useState("");
+  const [user, setUser] = useState();
 
-  const { loading, user, getTokenSilently } = useAuth0();
+  useEffect(() => {
+    var tempUser = localStorage.getItem("user");
+    setUser(tempUser);
+  }, []);
+  let Auth = useContext(AuthContext);
 
-  if (loading || !user) {
+  let { getAccessToken } = Auth;
+
+  if (!user) {
     return <div>Loading</div>;
   }
   const callApi = async () => {
     try {
-      const token = await getTokenSilently();
+      const token = await getAccessToken();
       const response = await fetch("/api/test", {
         headers: {
           Authorization: `Bearer ${token}`
@@ -41,7 +48,8 @@ export default function Dashboard() {
       <p>{user.email}</p>
       <button onClick={callApi}>Ping API</button>
       {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
-      {/* <code>{JSON.stringify(user, null, 2)}</code> */}
+
+      <code>{JSON.stringify(user, null, 2)}</code>
     </Main>
   );
 }
