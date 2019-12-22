@@ -1,4 +1,4 @@
-import { signToken } from "./../middleware/common";
+import { signToken } from "./../middleware/token";
 import mongoose from "mongoose";
 import "dotenv/config";
 import { Request, Response } from "express";
@@ -66,7 +66,13 @@ export default [
                 });
               }
               if (result) {
-                var token = signToken(user);
+                var tokenUser = { email: user.email, password: user.password };
+                console.log(tokenUser);
+                var token = signToken(tokenUser, {
+                  iss: "me",
+                  sub: "me",
+                  aud: req.originalUrl
+                });
                 return res.status(200).send({
                   success: "Welcome to the JWT auth",
                   token: token

@@ -4,22 +4,8 @@ import parser from "body-parser";
 import compress from "compression";
 import morgan from "morgan";
 import path from "path";
-import jwt from "jsonwebtoken";
 
 const { LOCAL } = process.env;
-
-export const signToken = (user: any) => {
-  let { _id, email } = user;
-  const JWTToken = jwt.sign(
-    {
-      email: email,
-      _id: _id
-    },
-    "secret",
-    { expiresIn: "2h" }
-  );
-  return JWTToken;
-};
 
 export const handleCors = (router: Router) => {
   router.use(cors());
