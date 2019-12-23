@@ -3,8 +3,8 @@ import cron from "node-cron";
 import path from "path";
 import fs from "fs";
 
-export const generateKeys = cron.schedule("0 0 23 1 * 1", () => {
-  generateKeyPair(
+const generateKey = () => {
+  return generateKeyPair(
     "rsa",
     {
       modulusLength: 4096,
@@ -20,9 +20,11 @@ export const generateKeys = cron.schedule("0 0 23 1 * 1", () => {
       }
     },
     (err, publicKey, privateKey) => {
+      console.log(publicKey);
       if (err) {
         throw err;
       } else {
+        fs.mkdirSync(path.join(__dirname, "./Keys"));
         fs.writeFileSync(
           path.join(__dirname, "./Keys/public.key"),
           publicKey,
@@ -36,4 +38,16 @@ export const generateKeys = cron.schedule("0 0 23 1 * 1", () => {
       }
     }
   );
+};
+
+export const generateKeys = cron.schedule("0 0 23 1 * 1", () => {
+  generateKey();
 });
+
+export const checkForKeys = () => {
+  if (!fs.existsSync(path.join(__dirname, "./Keys/private.key"))) {
+    generateKey();
+  } else {
+    return;
+  }
+};

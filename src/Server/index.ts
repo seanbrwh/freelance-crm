@@ -5,8 +5,9 @@ import { applyMiddleware, applyRoutes } from "./utils";
 import routes from "./routes";
 import middleware from "./middleware";
 import connect from "./connect";
-import { generateKeys } from "./Jobs/GenerateKeys";
+import { generateKeys, checkForKeys } from "./Jobs/GenerateKeys";
 
+checkForKeys();
 generateKeys.start();
 
 const { PORT, NODE_ENV } = process.env;

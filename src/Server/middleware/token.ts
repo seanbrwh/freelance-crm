@@ -7,39 +7,45 @@ const iss = "Freelance crm";
 const sub = "some@user.com";
 const aud = "http://localhost:3020";
 
-const privateKey = fs.readFileSync(
-  path.join(__dirname, "../Jobs/Keys/private.key"),
-  "utf8"
-);
-const publicKey = fs.readFileSync(
-  path.join(__dirname, "../Jobs/Keys/public.key"),
-  "utf8"
-);
+var privateKey: any = null;
+var publicKey: any = null;
 
-const signOptions = {
-  issuer: iss,
-  subject: sub,
-  audience: aud,
-  expiresIn: "2h",
-  algorithm: "RS256"
-};
+(function getKeys() {
+  if (
+    fs.existsSync(path.join(__dirname, "../Jobs/Keys/private.key")) &&
+    fs.existsSync(path.join(__dirname, "../Jobs/Keys/public.key"))
+  ) {
+    const privateK = fs.readFileSync(
+      path.join(__dirname, "../Jobs/Keys/private.key"),
+      "utf8"
+    );
+    const publicK = fs.readFileSync(
+      path.join(__dirname, "../Jobs/Keys/public.key"),
+      "utf8"
+    );
+    (privateKey = privateK), (publicKey = publicK);
+  } else {
+    (privateKey = "ERROR"), (publicKey = "ERROR");
+  }
+})();
 
-const verifyOptions = {
-  issuer: iss,
-  subject: sub,
-  audience: aud,
-  expiresIn: "2h",
-  algorithm: ["RS256"]
-};
+interface signOptions {
+  issuer: string;
+  subject: string;
+  audience: string;
+  expiresIn: string;
+  algorithm: string;
+}
+
+interface verifyOptions {
+  issuer: string;
+  subject: string;
+  audience: string;
+  expiresIn: string;
+  algorithm: string[];
+}
 
 export const signToken = (payload: any, $Options: any) => {
-  /**
-   * sOptions = {
-   *  issuer:"AUTH/Resource/This server",
-   *  subject: "iam@user.me",
-   *  audience:"Client_identity" // this should be provided by the client
-   * }
-   */
   var signOptions = {
     issuer: $Options.iss,
     subject: $Options.sub,
@@ -56,14 +62,6 @@ export const signToken = (payload: any, $Options: any) => {
 };
 
 export const verifyToken = (token: any, $Option: any) => {
-  /**
-   * vOption = {
-   *  issuer:"AUTH/RESOURCE/THIS/SERVER",
-   *  subject:"iam@user.me",
-   *  audience:"Client_Identity" // this should be provided by the client
-   * }
-   */
-
   var verifyOptions = {
     issuer: $Option.iss,
     subject: $Option.sub,
