@@ -5,23 +5,32 @@ export interface IUser extends Document {
   email: string;
   password: string;
   emailVerified: boolean;
+  nonce: string;
 }
 
-const UserSchema: Schema = new Schema({
-  _id: Schema.Types.ObjectId,
-  email: {
-    type: String,
-    required: true,
-    unique: true
+const UserSchema: Schema = new Schema(
+  {
+    _id: Schema.Types.ObjectId,
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    emailVerified: {
+      type: Boolean,
+      required: true
+    },
+    nonce: {
+      required: true,
+      type: String,
+      expires: "1d"
+    }
   },
-  password: {
-    type: String,
-    required: true
-  },
-  emailVerified: {
-    type: Boolean,
-    required: true
-  }
-});
+  { timestamps: true }
+);
 
 export default mongoose.model<IUser>("User", UserSchema);

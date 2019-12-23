@@ -4,10 +4,10 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { signToken } from "./../middleware/token";
+import { signToken, verifyToken } from "./../middleware/token";
 import UserController from "../controllers/User.controller";
 import url from "url";
-import { urlencoded } from "body-parser";
+import crypto from "crypto";
 
 export default [
   {
@@ -34,7 +34,8 @@ export default [
               _id: mongoose.Types.ObjectId(),
               password: hash,
               email: req.body.email,
-              emailVerified: false
+              emailVerified: false,
+              nonce: "something"
             });
             user
               .then(result => {
@@ -71,6 +72,55 @@ export default [
     handler: [
       (req: Request, res: Response) => {
         //create user, send a verify email, then send token.
+        if (req.body.email && req.body.password) {
+          let { email, password } = req.body;
+          bcrypt.hash(password, 10, (err, hash) => {
+            UserController.FindOne({ email: email }).then(result => {
+              if (result) {
+                return res.redirect("/sign-in");
+              } else {
+                UserController.CreateUser({
+                  _id: mongoose.Types.ObjectId(),
+                  password: hash,
+                  email: email,
+                  emailVerified: false,
+                  nonce: crypto.randomBytes(16).toString("base64")
+                })
+                  .then(result => {
+                    var tokenUser = {
+                      email: result.email,
+                      password: result.password
+                    };
+                    var token = signToken(tokenUser, {
+                      iss: "me",
+                      sub: "me",
+                      aud: req.originalUrl
+                    });
+                    var link =
+                      "http://" +
+                      req.get("host") +
+                      "/verify?id=" +
+                      result.nonce;
+                    var msg = message(req.body.email, link);
+                    transport.sendMail(msg, (err, info) => {
+                      if (err) {
+                        console.error(err);
+                      } else {
+                        return res.status(200).send({
+                          token: token,
+                          expires_at: new Date().getTime() + 7200000,
+                          user: { email: result.email }
+                        });
+                      }
+                    });
+                  })
+                  .catch(err => {
+                    console.error(err);
+                  });
+              }
+            });
+          });
+        }
       }
     ]
   },
@@ -79,9 +129,9 @@ export default [
     method: "get",
     handler: [
       (req: Request, res: Response) => {
-        if (req.query.id) {
+        if (req.query.nonce) {
           UserController.UpdateOne({
-            _id: req.query.id,
+            nonce: req.query.nonce,
             dataKey: "emailVerified",
             data: true
           }).then(result => {
@@ -96,19 +146,18 @@ export default [
                 aud: req.originalUrl
               });
               var authRes = {
-                success: "Email%20verified",
                 token: token,
                 expires_at: new Date().getTime() + 7200000,
-                email: result.email
+                user: { email: result.email }
               };
 
               res.redirect(
                 url.format({
                   pathname: "/callback",
                   query: {
-                    success: authRes.success,
                     token: authRes.token,
-                    expiresAt: authRes.expires_at
+                    expiresAt: authRes.expires_at,
+                    user: authRes.user
                   }
                 })
               );

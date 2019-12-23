@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 type Rest = {
   [x: string]: any;
@@ -11,9 +12,15 @@ interface Private {
 }
 
 const PrivateRoute = ({ component: Component, path, ...rest }: Private) => {
-  const [authenticated] = useState(true);
+  const Auth = useContext(AuthContext);
+  let { checkAuthentication } = Auth;
+
   const render = (props: any) =>
-    authenticated === true ? <Component {...props} /> : <Redirect to="/" />;
+    checkAuthentication() === true ? (
+      <Component {...props} />
+    ) : (
+      <Redirect to="/" />
+    );
 
   return <Route path={path} render={render} {...rest} />;
 };

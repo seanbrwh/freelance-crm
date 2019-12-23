@@ -5,6 +5,7 @@ interface ICreateUserInput {
   email: IUser["email"];
   password: IUser["password"];
   emailVerified: IUser["emailVerified"];
+  nonce: IUser["nonce"];
 }
 interface IFindOne {
   email?: string;
@@ -12,18 +13,20 @@ interface IFindOne {
 }
 
 interface IUpdateOne {
-  _id: any;
+  _id?: any;
   dataKey: any;
   data: any;
+  nonce?: any;
 }
 
 async function CreateUser({
   _id,
   email,
   password,
-  emailVerified
+  emailVerified,
+  nonce
 }: ICreateUserInput): Promise<IUser> {
-  return User.create({ _id, email, password, emailVerified })
+  return User.create({ _id, email, password, emailVerified, nonce })
     .then((data: IUser) => {
       return data;
     })
@@ -42,8 +45,13 @@ async function FindOne({ email, _id }: IFindOne): Promise<IUser> {
     });
 }
 
-async function UpdateOne({ _id, dataKey, data }: IUpdateOne): Promise<IUser> {
-  return User.findOneAndUpdate({ _id }, { [dataKey]: data })
+async function UpdateOne({
+  _id,
+  nonce,
+  dataKey,
+  data
+}: IUpdateOne): Promise<IUser> {
+  return User.findOneAndUpdate({ $or: [{ _id, nonce }] }, { [dataKey]: data })
     .then((result: IUser) => {
       return result;
     })

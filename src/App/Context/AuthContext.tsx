@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import history from "../utils/history";
 
 interface IAuthContext {
   children?: any;
@@ -8,34 +9,38 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }: IAuthContext) => {
   var [authenticated, setAuthenticated] = useState();
-  var [user, setUser] = useState();
+
+  useEffect(() => {
+    checkAuthentication();
+  }, [localStorage.getItem("expires_at")]);
 
   const login = async (email?: string, password?: string) => {
     var results = await fetch("/api/signin", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
       headers: {
         "Content-Type": "application/json"
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *client
       body: JSON.stringify({ email, password }) // body data type must match "Content-Type" header
     });
     setSession(results.json());
+    history.replace("/dasboard");
   };
 
-  const signup = async (email?: string, password?: string) => {
-    var results = await fetch("/api/signup", {
+  const signup = (email?: string, password?: string) => {
+    const request = new Request("/api/signupAndVerify", {
       method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
+      headers: new Headers({ "Content-Type": "application/json" })
     });
-    setSession(results.json());
+    fetch(request)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setSession(data);
+        history.replace("/dashboard");
+      })
+      .catch(err => console.error(err));
   };
 
   const passwordReset = (email?: string) => {};
@@ -49,7 +54,7 @@ const AuthProvider = ({ children }: IAuthContext) => {
 
   const setSession = authResult => {
     const expiresAt = JSON.stringify(
-      authResult.expires * 1000 + new Date().getTime()
+      authResult.expires_at * 1000 + new Date().getTime()
     );
     localStorage.setItem("access_token", authResult.token);
     localStorage.setItem("expires_at", expiresAt);
@@ -58,7 +63,11 @@ const AuthProvider = ({ children }: IAuthContext) => {
 
   const checkAuthentication = () => {
     var expires = +localStorage.getItem("expires_at");
-    return new Date().getTime() < expires;
+    if (new Date().getTime() < expires) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const getAccessToken = () => {
