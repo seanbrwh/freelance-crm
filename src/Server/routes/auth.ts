@@ -1,3 +1,5 @@
+import { transport } from "./../middleware/common";
+import { message } from "./../middleware/MailTemplates/index";
 import "dotenv/config";
 import mongoose from "mongoose";
 import { Request, Response } from "express";
@@ -29,13 +31,27 @@ export default [
             const user = UserController.CreateUser({
               _id: mongoose.Types.ObjectId(),
               password: hash,
-              email: req.body.email
+              email: req.body.email,
+              emailVerified: false
             });
             user
               .then(result => {
-                res.status(201).send({
-                  success: "success"
-                });
+                if (result._id) {
+                  var link =
+                    "http://" + req.get("host") + "/verify?id=" + result._id;
+                  var msg = message(req.body.email, link);
+                  transport.sendMail(msg, (err, info) => {
+                    if (err) {
+                      console.error(err);
+                    } else {
+                      res.status(201).send({
+                        success: "user created",
+                        mail: "sent",
+                        mailInfo: info
+                      });
+                    }
+                  });
+                }
               })
               .catch(err => {
                 if (err) {

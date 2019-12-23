@@ -4,6 +4,7 @@ interface ICreateUserInput {
   _id: IUser["_id"];
   email: IUser["email"];
   password: IUser["password"];
+  emailVerified: IUser["emailVerified"];
 }
 interface IFindOne {
   email: string;
@@ -12,9 +13,10 @@ interface IFindOne {
 async function CreateUser({
   _id,
   email,
-  password
+  password,
+  emailVerified
 }: ICreateUserInput): Promise<IUser> {
-  return User.create({ _id, email, password })
+  return User.create({ _id, email, password, emailVerified })
     .then((data: IUser) => {
       return data;
     })
