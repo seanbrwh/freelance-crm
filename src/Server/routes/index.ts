@@ -75,7 +75,8 @@ export default [
                 });
                 return res.status(200).send({
                   success: "Welcome to the JWT auth",
-                  token: token
+                  token: token,
+                  expires_at: new Date().getTime() + 7200000
                 });
               }
               return res.status(401).send({
