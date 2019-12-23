@@ -1,8 +1,8 @@
 import { signToken } from "./../middleware/token";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import "dotenv/config";
 import { Request, Response } from "express";
-import UserSchema from "../models/User.model";
+import UserController from "../controllers/User.controller";
 import bcrypt from "bcrypt";
 
 export default [
@@ -26,25 +26,19 @@ export default [
               hashError: err
             });
           } else {
-            const user = new UserSchema({
+            const user = UserController.CreateUser({
               _id: mongoose.Types.ObjectId(),
-              email: req.body.email,
               password: hash,
-              firstName: req.body.firstName,
-              lastName: req.body.lastName
+              email: req.body.email
             });
             user
-              .save()
               .then(result => {
-                console.log(result);
-                res.status(200).send({
-                  success: "New user has been created"
-                });
+                res.status(201).send(result);
               })
-              .catch(error => {
-                res.status(500).send({
-                  userError: error
-                });
+              .catch(err => {
+                if (err) {
+                  console.error(err);
+                }
               });
           }
         });
@@ -56,8 +50,7 @@ export default [
     method: "post",
     handler: [
       (req: Request, res: Response) => {
-        UserSchema.findOne({ email: req.body.email })
-          .exec()
+        UserController.FindOne({ email: req.body.email })
           .then(user => {
             bcrypt.compare(req.body.password, user.password, (err, result) => {
               if (err) {
@@ -74,9 +67,10 @@ export default [
                   aud: req.originalUrl
                 });
                 return res.status(200).send({
-                  success: "Welcome to the JWT auth",
+                  success: "success",
                   token: token,
-                  expires_at: new Date().getTime() + 7200000
+                  expires_at: new Date().getTime() + 7200000,
+                  email: user.email
                 });
               }
               return res.status(401).send({
@@ -92,19 +86,4 @@ export default [
       }
     ]
   }
-  // {
-  //   path: "/api/user",
-  //   method: "post",
-  //   handler: [
-  //     async (req: Request, res: Response) => {
-  //       let { firstName, lastName, email } = req.body;
-  //       const user = await UserController.CreateUser({
-  //         firstName,
-  //         lastName,
-  //         email
-  //       });
-  //       return res.send({ user });
-  //     }
-  //   ]
-  // }
 ];
