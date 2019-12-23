@@ -30,14 +30,9 @@ const AuthProvider = ({ children }: IAuthContext) => {
   const signup = async (email?: string, password?: string) => {
     var results = await fetch("/api/signup", {
       method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
       headers: {
         "Content-type": "application/json"
       },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
       body: JSON.stringify({ email, password })
     });
     setSession(results.json());

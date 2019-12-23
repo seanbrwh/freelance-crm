@@ -2,11 +2,12 @@ import { transport } from "./../middleware/common";
 import { message } from "./../middleware/MailTemplates/index";
 import "dotenv/config";
 import mongoose from "mongoose";
-import url from "url";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { signToken } from "./../middleware/token";
 import UserController from "../controllers/User.controller";
+import url from "url";
+import { urlencoded } from "body-parser";
 
 export default [
   {
@@ -65,35 +66,59 @@ export default [
     ]
   },
   {
+    path: "/api/signupAndVerify",
+    method: "post",
+    handler: [
+      (req: Request, res: Response) => {
+        //create user, send a verify email, then send token.
+      }
+    ]
+  },
+  {
     path: "/verify",
     method: "get",
     handler: [
       (req: Request, res: Response) => {
-        UserController.FindOne({ _id: req.query.id }).then(result => {
-          if (result) {
-            var tokenUser = {
-              email: result.email,
-              password: result.password
-            };
-            var token = signToken(tokenUser, {
-              iss: "me",
-              sub: "me",
-              aud: req.originalUrl
-            });
-            var authRes = {
-              success: "Email verified",
-              token: token,
-              expires_at: new Date().getTime() + 7200000,
-              email: result.email
-            };
-            res.redirect(
-              url.format({
-                pathname: "/",
-                query: authRes
-              })
-            );
-          }
-        });
+        if (req.query.id) {
+          UserController.UpdateOne({
+            _id: req.query.id,
+            dataKey: "emailVerified",
+            data: true
+          }).then(result => {
+            if (result) {
+              var tokenUser = {
+                email: result.email,
+                password: result.password
+              };
+              var token = signToken(tokenUser, {
+                iss: "me",
+                sub: "me",
+                aud: req.originalUrl
+              });
+              var authRes = {
+                success: "Email%20verified",
+                token: token,
+                expires_at: new Date().getTime() + 7200000,
+                email: result.email
+              };
+
+              res.redirect(
+                url.format({
+                  pathname: "/callback",
+                  query: {
+                    success: authRes.success,
+                    token: authRes.token,
+                    expiresAt: authRes.expires_at
+                  }
+                })
+              );
+            } else {
+              res.status(404).send({ err: "Not Found" });
+            }
+          });
+        } else {
+          res.status(400).send({ error: "Bad Request" });
+        }
       }
     ]
   },

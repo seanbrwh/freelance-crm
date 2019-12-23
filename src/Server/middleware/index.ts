@@ -6,7 +6,8 @@ import {
   setBasePath,
   setViewEngine,
   setStaticPath,
-  serveIndex
+  serveIndex,
+  setSession
 } from "./common";
 
 export default [
@@ -17,5 +18,6 @@ export default [
   setBasePath,
   setViewEngine,
   setStaticPath,
-  serveIndex
+  serveIndex,
+  setSession
 ];

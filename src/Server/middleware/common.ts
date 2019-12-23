@@ -5,6 +5,7 @@ import compress from "compression";
 import morgan from "morgan";
 import path from "path";
 import nodemailer from "nodemailer";
+import session from "express-session";
 
 const { LOCAL, MAIL_USERNAME, MAIL_PASS } = process.env;
 
@@ -32,6 +33,15 @@ export const setStaticPath = (router: Router) => {
   router.use(
     "/dist/static",
     express.static(path.join(__dirname, "../../dist/static"))
+  );
+};
+export const setSession = (router: Router) => {
+  router.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false
+    })
   );
 };
 

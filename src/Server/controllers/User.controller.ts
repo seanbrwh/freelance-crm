@@ -13,6 +13,7 @@ interface IFindOne {
 
 interface IUpdateOne {
   _id: any;
+  dataKey: any;
   data: any;
 }
 
@@ -41,14 +42,14 @@ async function FindOne({ email, _id }: IFindOne): Promise<IUser> {
     });
 }
 
-async function UpdateOne({ _id, data }: IUpdateOne): Promise<IUser> {
-  return User.findOneAndUpdate(_id, data, (err, doc) => {
-    if (err) {
-      return data;
-    } else {
-      return "Successfully changed";
-    }
-  });
+async function UpdateOne({ _id, dataKey, data }: IUpdateOne): Promise<IUser> {
+  return User.findOneAndUpdate({ _id }, { [dataKey]: data })
+    .then((result: IUser) => {
+      return result;
+    })
+    .catch((err: Error) => {
+      throw err;
+    });
 }
 
-export default { CreateUser, FindOne };
+export default { CreateUser, FindOne, UpdateOne };
