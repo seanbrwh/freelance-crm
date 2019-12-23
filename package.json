@@ -4,12 +4,13 @@
   "author": "Sean White (seanbrwh@gmail.com)",
   "license": "MIT",
   "scripts": {
-    "start:fix": "docker-compose down && docker-compose up --build && yarn install",
+    "start:fix": "docker-compose down && docker-compose pull && yarn install",
     "dev": "concurrently -n w: yarn:dev:*",
     "dev:tasks": "gulp",
     "dev:app": "webpack-dev-server --mode development --env.LOCAL=true --env.DOCKER=false --env.PUBLIC_PATH=http://localhost:3015",
     "dev:server": "tsc-watch --p \"./tsconfig.server.json\" --onSuccess \"nodemon ./dist/index.js\"",
-    "docker:dev": "docker-compose down && docker-compose up --build",
+    "docker:dev": "docker-compose up",
+    "docker:nuke": "docker-compose down -v",
     "app:analyze": "webpack --mode=production --env.analyze=true",
     "typescript": "tsc"
   },

@@ -7,7 +7,13 @@ interface ICreateUserInput {
   emailVerified: IUser["emailVerified"];
 }
 interface IFindOne {
-  email: string;
+  email?: string;
+  _id?: any;
+}
+
+interface IUpdateOne {
+  _id: any;
+  data: any;
 }
 
 async function CreateUser({
@@ -25,8 +31,8 @@ async function CreateUser({
     });
 }
 
-async function FindOne({ email }: IFindOne): Promise<IUser> {
-  return User.findOne({ email })
+async function FindOne({ email, _id }: IFindOne): Promise<IUser> {
+  return User.findOne({ $or: [{ email }, { _id }] })
     .then((data: IUser) => {
       return data;
     })
@@ -34,4 +40,15 @@ async function FindOne({ email }: IFindOne): Promise<IUser> {
       throw error;
     });
 }
+
+async function UpdateOne({ _id, data }: IUpdateOne): Promise<IUser> {
+  return User.findOneAndUpdate(_id, data, (err, doc) => {
+    if (err) {
+      return data;
+    } else {
+      return "Successfully changed";
+    }
+  });
+}
+
 export default { CreateUser, FindOne };

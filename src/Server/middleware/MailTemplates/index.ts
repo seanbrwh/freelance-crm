@@ -2,11 +2,12 @@ interface IAttachments {
   filename: string;
   path: string;
 }
+
 interface IMessage {
   from: string;
   to: string;
   subject: string;
-  text: string;
+  html: string;
   attachments: IAttachments[];
 }
 export const message = (toEmail: string, link: string): IMessage => {
@@ -14,7 +15,7 @@ export const message = (toEmail: string, link: string): IMessage => {
     from: "seanbrwh@gmail.com",
     to: toEmail,
     subject: "Please verify your email",
-    text:
+    html:
       "Hello,<br> Please Click on the link to verify your email.<br><a href=" +
       link +
       ">Click here to verify</a>",

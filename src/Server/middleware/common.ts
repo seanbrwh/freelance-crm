@@ -35,7 +35,7 @@ export const setStaticPath = (router: Router) => {
   );
 };
 
-export const transport = nodemailer.createTransport({
+export var transport = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
   auth: {
@@ -46,7 +46,10 @@ export const transport = nodemailer.createTransport({
 
 export const serveIndex = (router: Router) => {
   router.use("*", (req, res, next) => {
-    if (req.originalUrl.includes("/api")) {
+    if (
+      req.originalUrl.includes("/api") ||
+      req.originalUrl.includes("/verify")
+    ) {
       return next();
     } else {
       res.setHeader("Cache-Control", "no-store");
