@@ -4,8 +4,9 @@ import parser from "body-parser";
 import compress from "compression";
 import morgan from "morgan";
 import path from "path";
+import nodemailer from "nodemailer";
 
-const { LOCAL } = process.env;
+const { LOCAL, MAIL_USERNAME, MAIL_PASS } = process.env;
 
 export const handleCors = (router: Router) => {
   router.use(cors());
@@ -13,6 +14,7 @@ export const handleCors = (router: Router) => {
 export const handleBodyRequestParsing = (router: Router) => {
   router.use(parser.urlencoded({ extended: true, limit: "50mb" }));
   router.use(parser.json());
+  router.use(parser.json({ type: "application/vnd.api+json" }));
 };
 export const handleCompression = (router: Router) => {
   router.use(compress());
@@ -32,6 +34,16 @@ export const setStaticPath = (router: Router) => {
     express.static(path.join(__dirname, "../../dist/static"))
   );
 };
+
+export const transport = nodemailer.createTransport({
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: MAIL_USERNAME,
+    pass: MAIL_PASS
+  }
+});
+
 export const serveIndex = (router: Router) => {
   router.use("*", (req, res, next) => {
     if (req.originalUrl.includes("/api")) {

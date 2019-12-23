@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import Input from "../Components/Inputs/Input";
 import Button from "../Components/Inputs/Button";
 import Checkbox from "../Components/Inputs/Checkbox";
 import Card from "../Components/Card";
+import { AuthContext } from "../Context/AuthContext";
 
 const Main = styled.section`
   width: inherit;
@@ -12,10 +13,12 @@ const Main = styled.section`
   justify-content: space-evenly;
   align-items: center;
 `;
-
 export default function SignIn() {
   var [email, setEmail] = useState("");
   var [pswd, setPswd] = useState("");
+  let Auth = useContext(AuthContext);
+
+  let { login } = Auth;
 
   return (
     <>

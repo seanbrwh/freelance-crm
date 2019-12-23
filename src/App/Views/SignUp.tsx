@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Input from "../Components/Inputs/Input";
 import Button from "../Components/Inputs/Button";
 import Card from "../Components/Card";
+import { AuthContext } from "../Context/AuthContext";
 
 const Main = styled.section`
   width: inherit;
@@ -16,6 +17,9 @@ export default function SignUp() {
   var [email, setEmail] = useState("");
   var [pswd, setPswd] = useState("");
   var [confirmPswd, setConfirmPwsd] = useState("");
+  let Auth = useContext(AuthContext);
+
+  let { signup } = Auth;
 
   return (
     <>
@@ -39,7 +43,7 @@ export default function SignUp() {
             placeholder="Confirm password"
             type="password"
           />
-          <Button label="Create account" />
+          <Button label="Create account" onClick={() => signup(email, pswd)} />
           <p>&nbsp;</p>
           <p>Resend verification email</p>
         </Card>

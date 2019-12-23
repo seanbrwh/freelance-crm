@@ -10,7 +10,7 @@ import { generateKeys, checkForKeys } from "./Jobs/GenerateKeys";
 checkForKeys();
 generateKeys.start();
 
-const { PORT, NODE_ENV } = process.env;
+const { PORT } = process.env;
 
 const router = express();
 
