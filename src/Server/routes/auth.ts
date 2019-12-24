@@ -41,7 +41,10 @@ export default [
               .then(result => {
                 if (result._id) {
                   var link =
-                    "http://" + req.get("host") + "/verify?id=" + result._id;
+                    "http://" +
+                    req.get("host") +
+                    "/verify?nonce=" +
+                    result.nonce;
                   var msg = message(req.body.email, link);
                   transport.sendMail(msg, (err, info) => {
                     if (err) {
@@ -99,7 +102,7 @@ export default [
                     var link =
                       "http://" +
                       req.get("host") +
-                      "/verify?id=" +
+                      "/verify?nonce=" +
                       result.nonce;
                     var msg = message(req.body.email, link);
                     transport.sendMail(msg, (err, info) => {
