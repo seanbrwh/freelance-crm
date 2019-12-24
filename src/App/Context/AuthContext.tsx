@@ -85,6 +85,8 @@ const AuthProvider = ({ children }: IAuthContext) => {
     <AuthContext.Provider
       value={{
         authenticated,
+        getAccessToken: () => getAccessToken(),
+        getUser: () => getUser(),
         login: (...p: any | any[]) => login(...p),
         signup: (...p: any[]) => signup(...p),
         logout: () => logout()
