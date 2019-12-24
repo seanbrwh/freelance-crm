@@ -15,8 +15,8 @@ export const message = (toEmail: string, link: string): IMessage => {
     from: "seanbrwh@gmail.com",
     to: toEmail,
     subject: "Please verify your email",
-    html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "${link}www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="${link}www.w3.org/1999/xhtml">
+    html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="https://www.w3.org/1999/xhtml">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,7 +25,7 @@ export const message = (toEmail: string, link: string): IMessage => {
       <!-- Robot header image designed by Freepik.com -->
     
       <style type="text/css">
-      @import url(${link}fonts.googleapis.com/css?family=Droid+Sans);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Sans);
     
       /* Take care of image borders and formatting */
     
@@ -120,7 +120,7 @@ export const message = (toEmail: string, link: string): IMessage => {
                       <tr>
                         <td style="font-size: 30px; text-align:center;">
                           <br>
-                            Awesome Co
+                            Freelance Co.
                           <br>
                           <br>
                         </td>
@@ -197,8 +197,11 @@ export const message = (toEmail: string, link: string): IMessage => {
                                 <td style="color:#933f24;">
                                 <br>
                                   Time tracking
+                                  <br>
                                   Project Proposals
+                                  <br>
                                   Contract templates
+                                  <br>
                                   <br><br>
                                 </td>
                               </tr>
@@ -210,11 +213,11 @@ export const message = (toEmail: string, link: string): IMessage => {
                       <tr>
                         <td>
                           <div><!--[if mso]>
-                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${link}" style="height:50px;v-text-anchor:middle;width:200px;" arcsize="8%" stroke="f" fillcolor="#ac4d2f">
+                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3020" style="height:50px;v-text-anchor:middle;width:200px;" arcsize="8%" stroke="f" fillcolor="#ac4d2f">
                               <w:anchorlock/>
                               <center>
                             <![endif]-->
-                                <a href="${link}"
+                                <a href="http://localhost:3020"
                           style="background-color:#ac4d2f;border-radius:4px;color:#ffffff;display:inline-block;font-family: Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Learn More</a>
                             <!--[if mso]>
                               </center>
@@ -240,13 +243,13 @@ export const message = (toEmail: string, link: string): IMessage => {
                       </tr>
                       <tr>
                         <td style="color:#bbbbbb; font-size:12px;">
-                          <a href="#">View in browser</a> | <a href="#">Unsubscribe</a> | <a href="#">Contact</a>
+                        <a href="#">Unsubscribe</a> | <a href="#">Contact</a>
                           <br><br>
                         </td>
                       </tr>
                       <tr>
                         <td style="color:#bbbbbb; font-size:12px;">
-                           © 2014 All Rights Reserved
+                           © 2019 All Rights Reserved
                            <br>
                            <br>
                         </td>

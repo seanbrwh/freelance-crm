@@ -90,6 +90,7 @@ export default [
                   nonce: crypto.randomBytes(16).toString("base64")
                 })
                   .then(result => {
+                    console.log(result);
                     var tokenUser = {
                       email: result.email,
                       password: result.password
@@ -150,7 +151,7 @@ export default [
                 var authRes = {
                   token: token,
                   expires_at: new Date().getTime() + 7200000,
-                  user: { email: result.email }
+                  nonce: result.nonce
                 };
 
                 res.redirect(
@@ -159,7 +160,7 @@ export default [
                     query: {
                       token: authRes.token,
                       expiresAt: authRes.expires_at,
-                      user: authRes.user
+                      user: authRes.nonce
                     }
                   })
                 );
@@ -212,6 +213,33 @@ export default [
               hash: error
             });
           });
+      }
+    ]
+  },
+  {
+    path: "/api/user/verifynonce",
+    method: "post",
+    handler: [
+      (req: Request, res: Response) => {
+        console.log(req.body.nonce);
+        UserController.FindOneByNonce({
+          nonce: req.body.nonce
+        }).then(result => {
+          var tokenUser = {
+            email: result.email,
+            password: result.password
+          };
+          var token = signToken(tokenUser, {
+            iss: "me",
+            sub: "me",
+            aud: req.originalUrl
+          });
+          return res.status(200).send({
+            token: token,
+            expires_at: new Date().getTime() + 7200000,
+            user: { email: result.email }
+          });
+        });
       }
     ]
   }

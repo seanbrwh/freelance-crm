@@ -53,7 +53,7 @@ const AuthProvider = ({ children }: IAuthContext) => {
     history.replace("/");
   };
 
-  const setSession = authResult => {
+  const setSession = (authResult?: any) => {
     const expiresAt = JSON.stringify(
       authResult.expires_at * 1000 + new Date().getTime()
     );
@@ -85,6 +85,8 @@ const AuthProvider = ({ children }: IAuthContext) => {
     <AuthContext.Provider
       value={{
         authenticated,
+        checkAuthentication: () => checkAuthentication(),
+        setSession: (...p: any | any[]) => setSession(...p),
         getAccessToken: () => getAccessToken(),
         getUser: () => getUser(),
         login: (...p: any | any[]) => login(...p),

@@ -25,7 +25,6 @@ const UserSchema: Schema = new Schema(
       required: true
     },
     nonce: {
-      required: true,
       type: String,
       expires: "1d"
     }

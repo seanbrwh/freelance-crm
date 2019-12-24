@@ -9,7 +9,9 @@ interface ICreateUserInput {
 }
 interface IFindOne {
   email?: string;
-  _id?: any;
+}
+interface IFindByNonce {
+  nonce: any;
 }
 
 interface IUpdateOne {
@@ -34,8 +36,8 @@ async function CreateUser({
     });
 }
 
-async function FindOne({ email, _id }: IFindOne): Promise<IUser> {
-  return User.findOne({ $or: [{ email }, { _id }] })
+async function FindOne({ email }: IFindOne): Promise<IUser> {
+  return User.findOne({ email })
     .then((data: IUser) => {
       return data;
     })
@@ -43,12 +45,21 @@ async function FindOne({ email, _id }: IFindOne): Promise<IUser> {
       throw error;
     });
 }
+async function FindOneByNonce({ nonce }: IFindByNonce): Promise<IUser> {
+  return User.findOne({ nonce })
+    .then((data: IUser) => {
+      return data;
+    })
+    .catch((err: Error) => {
+      throw err;
+    });
+}
 
 async function UpdateOne({ nonce }: IUpdateOne): Promise<IUser> {
   return User.findOne({ nonce })
     .then((result: IUser) => {
       if (result) {
-        result.nonce = nonce;
+        result.emailVerified = true;
         return result;
       }
     })
@@ -57,4 +68,4 @@ async function UpdateOne({ nonce }: IUpdateOne): Promise<IUser> {
     });
 }
 
-export default { CreateUser, FindOne, UpdateOne };
+export default { CreateUser, FindOne, UpdateOne, FindOneByNonce };
