@@ -8,7 +8,7 @@ interface IMessage {
   to: string;
   subject: string;
   html: string;
-  attachments: IAttachments[];
+  attachments?: IAttachments[];
 }
 export const message = (toEmail: string, link: string): IMessage => {
   return {
@@ -18,12 +18,6 @@ export const message = (toEmail: string, link: string): IMessage => {
     html:
       "Hello,<br> Please Click on the link to verify your email.<br><a href=" +
       link +
-      ">Click here to verify</a>",
-    attachments: [
-      {
-        filename: "",
-        path: ""
-      }
-    ]
+      ">Click here to verify</a>"
   };
 };
