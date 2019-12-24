@@ -13,9 +13,8 @@ interface IFindOne {
 }
 
 interface IUpdateOne {
-  _id?: any;
-  dataKey: any;
-  data: any;
+  dataKey?: any;
+  data?: any;
   nonce?: any;
 }
 
@@ -45,15 +44,13 @@ async function FindOne({ email, _id }: IFindOne): Promise<IUser> {
     });
 }
 
-async function UpdateOne({
-  _id,
-  nonce,
-  dataKey,
-  data
-}: IUpdateOne): Promise<IUser> {
-  return User.findOneAndUpdate({ $or: [{ _id, nonce }] }, { [dataKey]: data })
+async function UpdateOne({ nonce }: IUpdateOne): Promise<IUser> {
+  return User.findOne({ nonce })
     .then((result: IUser) => {
-      return result;
+      if (result) {
+        result.nonce = nonce;
+        return result;
+      }
     })
     .catch((err: Error) => {
       throw err;

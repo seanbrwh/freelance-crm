@@ -134,40 +134,42 @@ export default [
       (req: Request, res: Response) => {
         if (req.query.nonce) {
           UserController.UpdateOne({
-            nonce: req.query.nonce,
-            dataKey: "emailVerified",
-            data: true
-          }).then(result => {
-            if (result) {
-              var tokenUser = {
-                email: result.email,
-                password: result.password
-              };
-              var token = signToken(tokenUser, {
-                iss: "me",
-                sub: "me",
-                aud: req.originalUrl
-              });
-              var authRes = {
-                token: token,
-                expires_at: new Date().getTime() + 7200000,
-                user: { email: result.email }
-              };
+            nonce: req.query.nonce
+          })
+            .then(result => {
+              if (result) {
+                var tokenUser = {
+                  email: result.email,
+                  password: result.password
+                };
+                var token = signToken(tokenUser, {
+                  iss: "me",
+                  sub: "me",
+                  aud: req.originalUrl
+                });
+                var authRes = {
+                  token: token,
+                  expires_at: new Date().getTime() + 7200000,
+                  user: { email: result.email }
+                };
 
-              res.redirect(
-                url.format({
-                  pathname: "/callback",
-                  query: {
-                    token: authRes.token,
-                    expiresAt: authRes.expires_at,
-                    user: authRes.user
-                  }
-                })
-              );
-            } else {
-              res.status(404).send({ err: "Not Found" });
-            }
-          });
+                res.redirect(
+                  url.format({
+                    pathname: "/callback",
+                    query: {
+                      token: authRes.token,
+                      expiresAt: authRes.expires_at,
+                      user: authRes.user
+                    }
+                  })
+                );
+              } else {
+                res.status(404).send({ err: "Not Found" });
+              }
+            })
+            .catch(err => {
+              console.error(err);
+            });
         } else {
           res.status(400).send({ error: "Bad Request" });
         }
