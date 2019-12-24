@@ -7,7 +7,14 @@ import path from "path";
 import nodemailer from "nodemailer";
 import session from "express-session";
 
-const { LOCAL, MAIL_USERNAME, MAIL_PASS } = process.env;
+const {
+  LOCAL,
+  MAIL_USERNAME,
+  MAIL_PASS,
+  MAIL_HOST,
+  MAIL_PORT,
+  MAIL_SECURE
+} = process.env;
 
 export const handleCors = (router: Router) => {
   router.use(cors());
@@ -46,13 +53,26 @@ export const setSession = (router: Router) => {
 };
 
 export var transport = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
+  host: MAIL_HOST,
+  port: +MAIL_PORT,
+  secure: MAIL_SECURE == "true",
   auth: {
     user: MAIL_USERNAME,
     pass: MAIL_PASS
   }
 });
+// export var transport;
+// var transport = nodemailer.createTestAccount((err, account) => {
+//   let transport = nodemailer.createTransport({
+//     host: MAIL_HOST,
+//     port: +MAIL_PORT,
+//     secure: !!MAIL_SECURE,
+//     auth: {
+//       user: MAIL_USERNAME,
+//       pass: MAIL_PASS
+//     }
+//   });
+// });
 
 export const serveIndex = (router: Router) => {
   router.use("*", (req, res, next) => {
