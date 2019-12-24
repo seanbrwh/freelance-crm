@@ -9,22 +9,21 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }: IAuthContext) => {
   var [authenticated, setAuthenticated] = useState();
-
-  useEffect(() => {
-    checkAuthentication();
-  }, [localStorage.getItem("expires_at")]);
-
   const login = async (email?: string, password?: string) => {
-    var results = await fetch("/api/signin", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: {
+    const request = new Request("/api/signin", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: new Headers({
         "Content-Type": "application/json"
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({ email, password }) // body data type must match "Content-Type" header
+      })
     });
-    setSession(results.json());
-    history.replace("/dasboard");
+    fetch(request)
+      .then(res => res.json())
+      .then(data => {
+        setSession(data);
+        history.replace("/dashboard");
+      })
+      .catch(err => console.error(err));
   };
 
   const signup = (email?: string, password?: string) => {
@@ -50,6 +49,8 @@ const AuthProvider = ({ children }: IAuthContext) => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     localStorage.removeItem("expires_at");
+    setAuthenticated(checkAuthentication());
+    history.replace("/");
   };
 
   const setSession = authResult => {
@@ -59,15 +60,12 @@ const AuthProvider = ({ children }: IAuthContext) => {
     localStorage.setItem("access_token", authResult.token);
     localStorage.setItem("expires_at", expiresAt);
     localStorage.setItem("user", JSON.stringify(authResult.user));
+    setAuthenticated(checkAuthentication());
   };
 
   const checkAuthentication = () => {
     var expires = +localStorage.getItem("expires_at");
-    if (new Date().getTime() < expires) {
-      return true;
-    } else {
-      return false;
-    }
+    return new Date().getTime() < expires;
   };
 
   const getAccessToken = () => {
@@ -86,7 +84,7 @@ const AuthProvider = ({ children }: IAuthContext) => {
   return (
     <AuthContext.Provider
       value={{
-        checkAuthentication: () => checkAuthentication(),
+        authenticated,
         login: (...p: any | any[]) => login(...p),
         signup: (...p: any[]) => signup(...p),
         logout: () => logout()

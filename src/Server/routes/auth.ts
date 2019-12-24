@@ -186,17 +186,15 @@ export default [
               }
               if (result) {
                 var tokenUser = { email: user.email, password: user.password };
-                console.log(tokenUser);
                 var token = signToken(tokenUser, {
                   iss: "me",
                   sub: "me",
                   aud: req.originalUrl
                 });
                 return res.status(200).send({
-                  success: "success",
                   token: token,
                   expires_at: new Date().getTime() + 7200000,
-                  email: user.email
+                  user: { email: user.email }
                 });
               }
               return res.status(401).send({

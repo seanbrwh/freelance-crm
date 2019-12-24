@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import Button from "./Inputs/Button";
 import Dropdown from "./Dropdown";
 import Freelance from "../Assets/freelancelogo.svg";
+import { AuthContext } from "../Context/AuthContext";
 
 const Header = styled.header`
   width: 100%;
@@ -41,6 +42,8 @@ const Img = styled.img`
 `;
 
 export default function Navbar() {
+  const Auth = useContext(AuthContext);
+  let { authenticated, logout } = Auth;
   return (
     <Header>
       <Nav>
@@ -68,14 +71,20 @@ export default function Navbar() {
             />
           </div>
           <div>
-            <>
-              <Link to="/sign-in">
-                <Button label="Sign in" primary invert />
-              </Link>
-              <Link to="/sign-up">
-                <Button label="Sign up" />
-              </Link>
-            </>
+            {!authenticated ? (
+              <>
+                <Link to="/sign-in">
+                  <Button label="Sign in" primary invert />
+                </Link>
+                <Link to="/sign-up">
+                  <Button label="Sign up" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Button label="Sign out" onClick={() => logout()} />
+              </>
+            )}
           </div>
         </section>
       </Nav>

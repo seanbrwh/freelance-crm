@@ -36,7 +36,7 @@ export default function SignIn() {
             placeholder="Password"
             type="password"
           />
-          <Button label="sign in" />
+          <Button label="sign in" onClick={() => login(email, pswd)} />
           <Checkbox label="Remember me" />
           <p>Reset password</p>
           <p>&nbsp;</p>

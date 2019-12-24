@@ -13,14 +13,17 @@ interface Private {
 
 const PrivateRoute = ({ component: Component, path, ...rest }: Private) => {
   const Auth = useContext(AuthContext);
-  let { checkAuthentication } = Auth;
+  let { authenticated, loading } = Auth;
+
+  useEffect(() => {
+    console.log(authenticated);
+    if (authenticated || loading) {
+      return;
+    }
+  }, [loading, authenticated]);
 
   const render = (props: any) =>
-    checkAuthentication() === true ? (
-      <Component {...props} />
-    ) : (
-      <Redirect to="/" />
-    );
+    authenticated === true ? <Component {...props} /> : <Redirect to="/" />;
 
   return <Route path={path} render={render} {...rest} />;
 };
