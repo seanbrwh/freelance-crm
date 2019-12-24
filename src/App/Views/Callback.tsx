@@ -3,14 +3,14 @@ import Loading from "../Components/Loading";
 import { AuthContext } from "../Context/AuthContext";
 import history from "../utils/history";
 
-export default function Callback(props) {
+export default function Callback(props: any) {
   var Auth = useContext(AuthContext);
   let { checkAuthentication, setSession } = Auth;
   useEffect(() => {
     var init = () => {
       let nonce = props.location.search
         .split(/\?|&/)
-        .filter(e => e)[2]
+        .filter((e: any) => e)[2]
         .replace(/user=/g, "");
       nonce = decodeURIComponent(nonce);
       const request = new Request("/api/user/verifynonce", {
@@ -29,7 +29,7 @@ export default function Callback(props) {
         });
     };
     init();
-  }, []);
+  }, [props.location.search]);
 
   return (
     <div>
