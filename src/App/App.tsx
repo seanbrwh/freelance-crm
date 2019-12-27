@@ -9,10 +9,10 @@ const Main = styled.main`
   width: 100%;
   height: calc(300vh -3rem);
   margin-top: 3rem;
+  background: #fafafa;
 `;
 const AppContainer = styled.div`
-  width: 80%;
-  height: inherit;
+  width: 90%;
   margin: 0 auto;
 `;
 
