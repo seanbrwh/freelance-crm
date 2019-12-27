@@ -28,9 +28,13 @@ const HeaderText = styled.div`
   h1 {
     font-size: 2rem;
     color: #aaccff;
-    font-weight: 800;
     margin: 1rem 0;
   }
+`;
+
+const Highlight = styled.span`
+  font-weight: bolder;
+  color: #aaccff;
 `;
 
 export default function Home() {
@@ -39,7 +43,9 @@ export default function Home() {
       <MainSection>
         <SubSection>
           <HeaderText>
-            <h1>Sweat over the project not the details. </h1>
+            <h1>
+              Sweat the <Highlight>project</Highlight> not the details.{" "}
+            </h1>
             <p>All-in-one freelance solution.</p>
           </HeaderText>
           <InputButton inputLabel="Enter your email" buttonLabel="Start Free" />

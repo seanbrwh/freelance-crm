@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface DropdownProps {
   children?: any;
@@ -63,7 +64,11 @@ const Dropdown: React.SFC<DropdownProps> = ({ label, items }) => {
           onMouseLeave={() => setShowDropdown(false)}
         >
           {items.map((el, idx) => (
-            <Li key={idx}>{el}</Li>
+            <Li key={idx}>
+              <Link to={`/${el.replace(/\s/g, "-").toLocaleLowerCase()}`}>
+                {el}
+              </Link>
+            </Li>
           ))}
         </Ul>
       )}

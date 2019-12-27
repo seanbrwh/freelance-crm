@@ -6,6 +6,7 @@ import PrivateRoute from "./Components/PrivateRoute";
 import SignIn from "./Views/SignIn";
 import SignUp from "./Views/SignUp";
 import Callback from "./Views/Callback";
+import NotFound from "./Views/NotFound";
 
 export default (
   <Switch>
@@ -14,5 +15,6 @@ export default (
     <Route path="/sign-up" component={SignUp} />
     <Route path="/callback" component={Callback} />
     <PrivateRoute path="/dashboard" component={Dashboard} />
+    <Route component={NotFound} />
   </Switch>
 );
