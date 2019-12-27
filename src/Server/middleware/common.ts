@@ -37,10 +37,7 @@ export const setViewEngine = (router: Application) => {
   router.set("view engine", "ejs");
 };
 export const setStaticPath = (router: Router) => {
-  router.use(
-    "/dist/static",
-    express.static(path.join(__dirname, "../../dist/static"))
-  );
+  router.use("/dist", express.static(path.join(__dirname, "../../dist")));
 };
 export const setSession = (router: Router) => {
   router.use(
@@ -61,24 +58,13 @@ export var transport = nodemailer.createTransport({
     pass: MAIL_PASS
   }
 });
-// export var transport;
-// var transport = nodemailer.createTestAccount((err, account) => {
-//   let transport = nodemailer.createTransport({
-//     host: MAIL_HOST,
-//     port: +MAIL_PORT,
-//     secure: !!MAIL_SECURE,
-//     auth: {
-//       user: MAIL_USERNAME,
-//       pass: MAIL_PASS
-//     }
-//   });
-// });
 
 export const serveIndex = (router: Router) => {
   router.use("*", (req, res, next) => {
     if (
       req.originalUrl.includes("/api") ||
-      req.originalUrl.includes("/verify")
+      req.originalUrl.includes("/verify") ||
+      req.originalUrl.includes("/favicon.ico")
     ) {
       return next();
     } else {
