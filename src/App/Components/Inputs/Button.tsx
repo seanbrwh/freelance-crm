@@ -7,6 +7,7 @@ interface ButtonProps {
   children?: any;
   primary?: boolean;
   invert?: boolean;
+  disabled?: boolean;
 }
 
 const Button: React.SFC<ButtonProps> = ({
@@ -14,7 +15,8 @@ const Button: React.SFC<ButtonProps> = ({
   label,
   primary,
   invert,
-  children
+  children,
+  disabled
 }) => {
   const IButton = styled.button`
     background: ${primary ? "white" : "#AACCFF"};
@@ -24,14 +26,23 @@ const Button: React.SFC<ButtonProps> = ({
     padding: 0.25em 1em;
     border: 2px solid #AACCFF;
     border-radius: 3px;
-
+    button[disabled]{
+      background:red
+    }
     &:hover {
       background: ${invert ? "#AACCFF" : ""}
       color: ${invert ? "white" : ""};
       box-shadow: ${!invert ? "2px 2px 2px 1px rgba(0, 0, 0, 0.2)" : ""}
+    }
   `;
   return (
-    <IButton type="button" name="button" onClick={onClick} value={label}>
+    <IButton
+      type="button"
+      name="button"
+      onClick={onClick}
+      value={label}
+      disabled={disabled}
+    >
       {!children ? label : children}
     </IButton>
   );

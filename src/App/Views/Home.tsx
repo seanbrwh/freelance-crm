@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../Components/Inputs/Button";
 import InputButton from "../Components/Inputs/InputButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Redirect } from "react-router-dom";
 
 const MainSection = styled.section`
   width: 100%;
@@ -45,6 +46,9 @@ const Highlight = styled.span`
 const IconSection = styled.div``;
 
 export default function Home() {
+  var [signUp, setSignUp] = useState(false);
+  var [email, setEmail] = useState("");
+
   return (
     <>
       <MainSection>
@@ -55,7 +59,16 @@ export default function Home() {
             </h1>
             <p>All-in-one freelance solution.</p>
           </HeaderText>
-          <InputButton inputLabel="Enter your email" buttonLabel="Start Free" />
+          <InputButton
+            inputLabel="Enter your email"
+            buttonLabel="Start Free"
+            inputValue={email}
+            onClick={() => setSignUp(true)}
+            onChange={evt => setEmail(evt.target.value)}
+          />
+          {signUp && email && (
+            <Redirect to={{ pathname: "/sign-up", state: { email: email } }} />
+          )}
         </SubSection>
         <SubSection>
           <img src="" alt="Showing how to explore the features" />

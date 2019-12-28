@@ -4,6 +4,9 @@ import styled from "styled-components";
 interface IInputButton {
   inputLabel: string;
   buttonLabel: string;
+  inputValue?: any;
+  onClick?(): any;
+  onChange?(evt: any): any;
 }
 const SImportButton = styled.div`
   background-color: #fff;
@@ -49,11 +52,22 @@ const SImportButton = styled.div`
   }
 `;
 
-export default function InputButton({ inputLabel, buttonLabel }: IInputButton) {
+export default function InputButton({
+  inputLabel,
+  buttonLabel,
+  onClick,
+  inputValue,
+  onChange
+}: IInputButton) {
   return (
     <SImportButton>
-      <input type="text" placeholder={inputLabel} />
-      <button>{buttonLabel}</button>
+      <input
+        type="text"
+        placeholder={inputLabel}
+        value={inputValue}
+        onChange={onChange}
+      />
+      <button onClick={onClick}>{buttonLabel}</button>
     </SImportButton>
   );
 }

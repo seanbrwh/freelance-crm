@@ -13,13 +13,19 @@ const Main = styled.section`
   align-items: center;
 `;
 
-export default function SignUp() {
+export default function SignUp(props) {
   var [email, setEmail] = useState("");
   var [pswd, setPswd] = useState("");
   var [confirmPswd, setConfirmPwsd] = useState("");
   let Auth = useContext(AuthContext);
 
   let { signup } = Auth;
+
+  useEffect(() => {
+    if (props.location.state.email) {
+      setEmail(props.location.state.email);
+    }
+  }, [props.location.state]);
 
   return (
     <>
