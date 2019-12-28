@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "../Components/Inputs/Input";
 import Button from "../Components/Inputs/Button";
 import InputButton from "../Components/Inputs/InputButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MainSection = styled.section`
   width: 100%;
@@ -19,6 +19,11 @@ const SubSection = styled.section`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  .icons {
+    font-size: 5rem;
+    color: #aaccff;
+    padding: 1rem;
+  }
 `;
 
 const HeaderText = styled.div`
@@ -36,6 +41,8 @@ const Highlight = styled.span`
   font-weight: bolder;
   color: #aaccff;
 `;
+
+const IconSection = styled.div``;
 
 export default function Home() {
   return (
@@ -56,8 +63,18 @@ export default function Home() {
       </MainSection>
       <MainSection>
         <SubSection>
-          Create proposals, keep track of time, and send out contracts in a
-          timely manner
+          <HeaderText>
+            <h1>
+              Create proposals, keep track of time, and send out contracts in a
+              timely manner
+            </h1>
+          </HeaderText>
+          <IconSection>
+            <FontAwesomeIcon icon="envelope-open-text" className="icons" />
+            <FontAwesomeIcon icon="user-clock" className="icons" />
+            <FontAwesomeIcon icon="credit-card" className="icons" />
+            <FontAwesomeIcon icon="chart-bar" className="icons" />
+          </IconSection>
         </SubSection>
         <SubSection>
           <Button label="Get started for free" />
@@ -65,9 +82,12 @@ export default function Home() {
       </MainSection>
       <MainSection>
         <SubSection>
+          <HeaderText>
+            <h1>Never worry about the little things again.</h1>
+            <p>Try it now and never look back</p>
+          </HeaderText>
           <Button label="Start free" />
         </SubSection>
-        <SubSection>Never worry about the little things again. </SubSection>
       </MainSection>
     </>
   );

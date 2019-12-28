@@ -6,7 +6,7 @@ const Foot = styled.footer`
   bottom: inherit;
   width: inherit;
   height: 30rem;
-  margin-top: 3rem;
+  padding-top: 3rem;
   background: #353736;
 `;
 const FootGroup = styled.div`
