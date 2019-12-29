@@ -16,13 +16,14 @@ const Main = styled.section`
 export default function SignUp(props) {
   var [email, setEmail] = useState("");
   var [pswd, setPswd] = useState("");
+  var [name, setName] = useState("");
   var [confirmPswd, setConfirmPwsd] = useState("");
   let Auth = useContext(AuthContext);
 
   let { signup } = Auth;
 
   useEffect(() => {
-    if (props.location.state.email) {
+    if (props.location.state != undefined) {
       setEmail(props.location.state.email);
     }
   }, [props.location.state]);
@@ -36,6 +37,12 @@ export default function SignUp(props) {
             onChange={evt => setEmail(evt.target.value)}
             placeholder="Email"
             type="email"
+          />
+          <Input
+            value={name}
+            onChange={evt => setName(evt.target.value)}
+            placeholder="Full name"
+            type="text"
           />
           <Input
             value={pswd}
