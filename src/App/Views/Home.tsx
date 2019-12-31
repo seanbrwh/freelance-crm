@@ -60,11 +60,10 @@ export default function Home() {
             <p>All-in-one freelance solution.</p>
           </HeaderText>
           <InputButton
-            inputLabel="Enter your email"
+            placeHolder="Enter your email"
             buttonLabel="Start Free"
-            inputValue={email}
             onClick={() => setSignUp(true)}
-            onChange={evt => setEmail(evt.target.value)}
+            handleValue={evt => setEmail(evt.target.value)}
           />
           {signUp && email && (
             <Redirect to={{ pathname: "/sign-up", state: { email: email } }} />
