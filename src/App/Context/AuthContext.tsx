@@ -81,10 +81,48 @@ const AuthProvider = ({ children }: IAuthContext) => {
     }
   };
 
+  const validateEmail = (email: string) => {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validatePassword = (password: string) => {
+    let errors = {
+      length: false,
+      special: false,
+      number: false
+    };
+    if (password.length > 6) {
+      errors.length = true;
+    }
+    if (/\W|_/g.test(password)) {
+      errors.special = true;
+    }
+    if (/(\\d)+\\./.test(password)) {
+      errors.number = true;
+    }
+
+    return errors;
+  };
+
+  const validateName = (name: string) => {
+    if (/[a-z] [a-z]/gi.test(name)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         authenticated,
+        validateEmail: (email: string) => validateEmail(email),
+        validateName: (name: string) => validateName(name),
+        validatePassword: (password: string) => validatePassword(password),
         checkAuthentication: () => checkAuthentication(),
         setSession: (...p: any | any[]) => setSession(...p),
         getAccessToken: () => getAccessToken(),

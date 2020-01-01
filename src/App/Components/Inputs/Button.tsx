@@ -9,18 +9,9 @@ interface ButtonProps {
   invert?: boolean;
   disabled?: boolean;
 }
-
-const Button: React.SFC<ButtonProps> = ({
-  onClick,
-  label,
-  primary,
-  invert,
-  children,
-  disabled
-}) => {
-  const IButton = styled.button`
-    background: ${primary ? "white" : "#AACCFF"};
-    color: ${primary ? "#AACCFF" : "white"};
+const IButton = styled.button`
+    background: ${props => (props.primary ? "white" : "#AACCFF")};
+    color: ${props => (props.primary ? "#AACCFF" : "white")};
     font-size: 1em;
     margin: 1em;
     padding: 0.25em 1em;
@@ -30,13 +21,25 @@ const Button: React.SFC<ButtonProps> = ({
       background:red
     }
     &:hover {
-      background: ${invert ? "#AACCFF" : ""}
-      color: ${invert ? "white" : ""};
-      box-shadow: ${!invert ? "2px 2px 2px 1px rgba(0, 0, 0, 0.2)" : ""}
+      background: ${props => (props.invert ? "#AACCFF" : "")}
+      color: ${props => (props.invert ? "white" : "")};
+      box-shadow: ${props =>
+        !props.invert ? "2px 2px 2px 1px rgba(0, 0, 0, 0.2)" : ""}
     }
   `;
+
+const Button: React.SFC<ButtonProps> = ({
+  onClick,
+  label,
+  primary,
+  invert,
+  children,
+  disabled
+}) => {
   return (
     <IButton
+      primary={primary}
+      invert={invert}
       type="button"
       name="button"
       onClick={onClick}

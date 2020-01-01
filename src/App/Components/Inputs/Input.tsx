@@ -1,32 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-interface InputProps {
-  value?: string | number;
-  onChange?(evt: any): any;
+interface IInput {
   placeholder?: string;
   type?: string;
 }
 
-const InputI = styled.input`
+const SInput = styled.input`
   margin: 2rem 0 0 0;
   min-width: 15rem;
   min-height: 1.6rem;
 `;
 
-export default function Input({
-  value,
-  onChange,
-  placeholder,
-  type
-}: InputProps) {
+export default function Input({ placeholder, type }: IInput) {
+  var [value, setValue] = useState("");
   return (
     <div>
-      <InputI
+      <SInput
         type={type}
-        value={value}
-        onChange={onChange}
+        value={value || ""}
         placeholder={placeholder}
+        onChange={evt => setValue(evt.target.value)}
       />
     </div>
   );

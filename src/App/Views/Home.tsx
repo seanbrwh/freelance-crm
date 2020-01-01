@@ -60,6 +60,7 @@ export default function Home() {
             <p>All-in-one freelance solution.</p>
           </HeaderText>
           <InputButton
+            type="email"
             placeHolder="Enter your email"
             buttonLabel="Start Free"
             onClick={() => setSignUp(true)}

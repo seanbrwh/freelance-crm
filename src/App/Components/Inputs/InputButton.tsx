@@ -4,6 +4,7 @@ import styled from "styled-components";
 interface IInputButton {
   placeHolder?: string;
   buttonLabel: string;
+  type: string;
   onClick?(): any;
   handleValue?(evt: any): any;
 }
@@ -12,18 +13,23 @@ const InputButton: React.FC<IInputButton> = ({
   placeHolder,
   buttonLabel,
   onClick,
-  handleValue
+  handleValue,
+  type
 }) => {
   var [value, setValue] = React.useState("");
   var [valid, setValid] = React.useState(false);
 
   React.useEffect(() => {
-    setValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
+    if (type === "email") {
+      setValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
+    } else {
+      setValid(true);
+    }
   }, [value, valid]);
 
   return (
     <>
-      <SInputButton valid={valid}>
+      <SInputButton valid={valid} type={type}>
         <input
           type="text"
           placeholder={placeHolder}
@@ -31,7 +37,9 @@ const InputButton: React.FC<IInputButton> = ({
           onChange={evt => setValue(evt.target.value)}
           onBlur={handleValue}
         />
-        <button onClick={onClick}>{buttonLabel}</button>
+        <button disabled={!valid} onClick={onClick}>
+          {buttonLabel}
+        </button>
       </SInputButton>
     </>
   );
@@ -72,7 +80,7 @@ let SInputButton = styled.div`
     position: absolute;
     background: #aaccff;
     border: 0;
-    color: #fff;
+    color: ${props => (props.valid ? "#fff" : "grey")};
     height: inherit;
     border-radius: inherit;
     width: 8rem;
