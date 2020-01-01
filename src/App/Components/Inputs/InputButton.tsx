@@ -1,14 +1,43 @@
-import React from "react";
+import * as React from "react";
 import styled from "styled-components";
 
 interface IInputButton {
-  inputLabel: string;
+  placeHolder?: string;
   buttonLabel: string;
-  inputValue?: any;
   onClick?(): any;
-  onChange?(evt: any): any;
+  handleValue?(evt: any): any;
 }
-const SImportButton = styled.div`
+
+const InputButton: React.FC<IInputButton> = ({
+  placeHolder,
+  buttonLabel,
+  onClick,
+  handleValue
+}) => {
+  var [value, setValue] = React.useState("");
+  var [valid, setValid] = React.useState(false);
+
+  React.useEffect(() => {
+    setValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
+  }, [value, valid]);
+
+  return (
+    <>
+      <SInputButton valid={valid}>
+        <input
+          type="text"
+          placeholder={placeHolder}
+          value={value || ""}
+          onChange={evt => setValue(evt.target.value)}
+          onBlur={handleValue}
+        />
+        <button onClick={onClick}>{buttonLabel}</button>
+      </SInputButton>
+    </>
+  );
+};
+
+let SInputButton = styled.div`
   background-color: #fff;
   position: relative;
   height: 4rem;
@@ -28,6 +57,7 @@ const SImportButton = styled.div`
     border-bottom-right-radius: inherit;
     padding-left: 2rem;
     font-size: 1.2rem;
+    color: ${props => (props.valid ? "inherit" : "red")};
   }
   input[type="text"]::-webkit-input-placeholder,
   input[type="text"]::-moz-placeholder,
@@ -52,22 +82,4 @@ const SImportButton = styled.div`
   }
 `;
 
-export default function InputButton({
-  inputLabel,
-  buttonLabel,
-  onClick,
-  inputValue,
-  onChange
-}: IInputButton) {
-  return (
-    <SImportButton>
-      <input
-        type="text"
-        placeholder={inputLabel}
-        value={inputValue}
-        onChange={onChange}
-      />
-      <button onClick={onClick}>{buttonLabel}</button>
-    </SImportButton>
-  );
-}
+export default InputButton;
